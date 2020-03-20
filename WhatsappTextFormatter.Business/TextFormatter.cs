@@ -1,12 +1,15 @@
 ﻿using System;
 
-namespace WhatsappTextFormater.Business
+namespace WhatsappTextFormatter.Business
 {
     public class TextFormatter
     {
         public TextFormatInfo GetTextFormatInfo(string text)
         {
-            return new TextFormatInfo();
+            return new TextFormatInfo
+            {
+                Text = text
+            };
         }
     }
 }

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace WhatsappTextFormater.Business
+namespace WhatsappTextFormatter.Business
 {
     public class TextFormatInfo
     {
@@ -24,5 +24,12 @@ namespace WhatsappTextFormater.Business
         /// The collection of indexes of the strike-through characters in the text.
         /// </summary>
         public ICollection<Tuple<int, int>> StrikeThroughs { get; set; }
+
+        public TextFormatInfo()
+        {
+            Bolds = new Tuple<int, int>[] { };
+            Italics = new Tuple<int, int>[] { };
+            StrikeThroughs = new Tuple<int, int>[] { };
+        }
     }
 }

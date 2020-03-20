@@ -10,7 +10,7 @@
 // ------------------------------------------------------------------------------
 #region Designer generated code
 #pragma warning disable
-namespace WhatsappTextFormater.Bussiness.Tests
+namespace WhatsappTextFormatter.Business.Tests
 {
     using TechTalk.SpecFlow;
     using System;
@@ -113,11 +113,19 @@ this.ScenarioInitialize(scenarioInfo);
             this.ScenarioCleanup();
         }
         
-        [TechTalk.SpecRun.ScenarioAttribute("Unformatted, The quick brown fox jumps over the lazy dog", SourceLine=12)]
-        public virtual void Unformatted_TheQuickBrownFoxJumpsOverTheLazyDog()
+        [TechTalk.SpecRun.ScenarioAttribute("Unformatted, Variant 0", SourceLine=12)]
+        public virtual void Unformatted_Variant0()
         {
 #line 4
 this.Unformatted("The quick brown fox jumps over the lazy dog", "The quick brown fox jumps over the lazy dog", "{}", "{}", "{}", ((string[])(null)));
+#line hidden
+        }
+        
+        [TechTalk.SpecRun.ScenarioAttribute("Unformatted, Variant 1", SourceLine=12)]
+        public virtual void Unformatted_Variant1()
+        {
+#line 4
+this.Unformatted("*The quick brown fox jumps over the lazy dog", "*The quick brown fox jumps over the lazy dog", "{}", "{}", "{}", ((string[])(null)));
 #line hidden
         }
         
@@ -125,7 +133,7 @@ this.Unformatted("The quick brown fox jumps over the lazy dog", "The quick brown
         {
             string[] tagsOfScenario = exampleTags;
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Something Bold", null, exampleTags);
-#line 15
+#line 16
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
@@ -145,37 +153,37 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-#line 16
+#line 17
  testRunner.When(string.Format("I input the text {0}", text), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 17
+#line 18
  testRunner.Then(string.Format("the property Text of the result should be {0}", unformattedText), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
-#line 18
+#line 19
  testRunner.And(string.Format("the property Bolds of the result should be {0}", bolds), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 19
+#line 20
  testRunner.And(string.Format("the property Italics of the result should be {0}", italics), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 20
+#line 21
  testRunner.And(string.Format("the property StrikeThroughs of the result should be {0}", strikeThroughs), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             }
             this.ScenarioCleanup();
         }
         
-        [TechTalk.SpecRun.ScenarioAttribute("Something Bold, Variant 0", SourceLine=23)]
+        [TechTalk.SpecRun.ScenarioAttribute("Something Bold, Variant 0", SourceLine=24)]
         public virtual void SomethingBold_Variant0()
         {
-#line 15
+#line 16
 this.SomethingBold("The quick brown *fox* jumps over the lazy dog", "The quick brown fox jumps over the lazy dog", "{(16,20)}", "{}", "{}", ((string[])(null)));
 #line hidden
         }
         
-        [TechTalk.SpecRun.ScenarioAttribute("Something Bold, Variant 1", SourceLine=23)]
+        [TechTalk.SpecRun.ScenarioAttribute("Something Bold, Variant 1", SourceLine=24)]
         public virtual void SomethingBold_Variant1()
         {
-#line 15
+#line 16
 this.SomethingBold("The quick brown *fox* jumps over the lazy *dog*", "The quick brown fox jumps over the lazy dog", "{(16, 20), (42, 46)}", "{}", "{}", ((string[])(null)));
 #line hidden
         }

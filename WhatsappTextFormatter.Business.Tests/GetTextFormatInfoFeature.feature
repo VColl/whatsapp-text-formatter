@@ -9,8 +9,9 @@ Scenario Outline: Unformatted
 	And the property StrikeThroughs of the result should be <strikeThroughs>
 
 	Examples:
-		| text                                        | unformattedText                             | bolds | italics | strikeThroughs |
-		| The quick brown fox jumps over the lazy dog | The quick brown fox jumps over the lazy dog | {}    | {}      | {}             |
+		| text                                         | unformattedText                              | bolds | italics | strikeThroughs |
+		| The quick brown fox jumps over the lazy dog  | The quick brown fox jumps over the lazy dog  | {}    | {}      | {}             |
+		| *The quick brown fox jumps over the lazy dog | *The quick brown fox jumps over the lazy dog | {}    | {}      | {}             |
 
 Scenario Outline: Something Bold
 	When I input the text <text>

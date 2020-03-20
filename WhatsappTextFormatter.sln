@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29806.167
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WhatsappTextFormater.Business", "WhatsappTextFormater.Business\WhatsappTextFormater.Business.csproj", "{9EBA7487-B1A3-46DE-97B5-0F086E86051B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WhatsappTextFormatter.Business", "WhatsappTextFormatter.Business\WhatsappTextFormatter.Business.csproj", "{9EBA7487-B1A3-46DE-97B5-0F086E86051B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WhatsappTextFormater.Bussiness.Tests", "WhatsappTextFormater.Bussiness.UnitTests\WhatsappTextFormater.Bussiness.Tests.csproj", "{0D21976D-64EE-4BA7-8546-D1073BE02482}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WhatsappTextFormatter.Business.Tests", "WhatsappTextFormatter.Business.Tests\WhatsappTextFormatter.Business.Tests.csproj", "{0D21976D-64EE-4BA7-8546-D1073BE02482}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WhatsappTextFormatter.Business.Tests.NUnit", "WhatsappTextFormatter.Business.Tests.NUnit\WhatsappTextFormatter.Business.Tests.NUnit.csproj", "{094E5B31-E013-4E08-939A-EA82351FA228}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{0D21976D-64EE-4BA7-8546-D1073BE02482}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0D21976D-64EE-4BA7-8546-D1073BE02482}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0D21976D-64EE-4BA7-8546-D1073BE02482}.Release|Any CPU.Build.0 = Release|Any CPU
+		{094E5B31-E013-4E08-939A-EA82351FA228}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{094E5B31-E013-4E08-939A-EA82351FA228}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{094E5B31-E013-4E08-939A-EA82351FA228}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{094E5B31-E013-4E08-939A-EA82351FA228}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
