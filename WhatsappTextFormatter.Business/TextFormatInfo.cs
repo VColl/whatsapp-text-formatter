@@ -11,17 +11,17 @@ namespace WhatsappTextFormatter.Business
         public string Text { get; set; }
 
         /// <summary>
-        /// The collection of indexes of the bold characters in the text.
+        /// The collection of zero-based indexes of the bold characters in the text.
         /// </summary>
-        public ICollection<Tuple<int, int>> Bolds { get; set; }
+        public IEnumerable<Tuple<int, int>> Bolds { get; set; }
 
         /// <summary>
-        /// The collection of indexes of the italic characters in the text.
+        /// The collection of zero-based indexes of the italic characters in the text.
         /// </summary>
         public ICollection<Tuple<int, int>> Italics { get; set; }
 
         /// <summary>
-        /// The collection of indexes of the strike-through characters in the text.
+        /// The collection of zero-based indexes of the strike-through characters in the text.
         /// </summary>
         public ICollection<Tuple<int, int>> StrikeThroughs { get; set; }
 

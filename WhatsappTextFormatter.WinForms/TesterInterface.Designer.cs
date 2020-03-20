@@ -122,6 +122,7 @@
             this.rtbText.Dock = System.Windows.Forms.DockStyle.Fill;
             this.rtbText.Location = new System.Drawing.Point(151, 57);
             this.rtbText.Name = "rtbText";
+            this.rtbText.ReadOnly = true;
             this.rtbText.Size = new System.Drawing.Size(568, 20);
             this.rtbText.TabIndex = 1;
             this.rtbText.Text = "";
@@ -140,6 +141,7 @@
             this.rtbFormatInfo.Dock = System.Windows.Forms.DockStyle.Fill;
             this.rtbFormatInfo.Location = new System.Drawing.Point(151, 91);
             this.rtbFormatInfo.Name = "rtbFormatInfo";
+            this.rtbFormatInfo.ReadOnly = true;
             this.rtbFormatInfo.Size = new System.Drawing.Size(568, 129);
             this.rtbFormatInfo.TabIndex = 2;
             this.rtbFormatInfo.Text = "";

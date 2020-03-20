@@ -34,7 +34,7 @@ namespace WhatsappTextFormatter.Business.Tests.NUnit.GetTextFormatInfoFeature
             AssertIndexes(expectedResult.StrikeThroughs, _result.StrikeThroughs);
         }
 
-        private void AssertIndexes(ICollection<Tuple<int, int>> expectedIndexes, ICollection<Tuple<int, int>> actualIndexRanges) =>
+        private void AssertIndexes(IEnumerable<Tuple<int, int>> expectedIndexes, IEnumerable<Tuple<int, int>> actualIndexRanges) =>
             CollectionAssert.AreEquivalent(GetIndexes(expectedIndexes), GetIndexes(actualIndexRanges));
 
         private IEnumerable<int> GetIndexes(IEnumerable<Tuple<int, int>> indexRanges) =>
