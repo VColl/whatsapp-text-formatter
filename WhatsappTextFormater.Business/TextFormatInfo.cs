@@ -23,6 +23,6 @@ namespace WhatsappTextFormater.Business
         /// <summary>
         /// The collection of indexes of the strike-through characters in the text.
         /// </summary>
-        public ICollection<Tuple<int, int>> Strikethroughs { get; set; }
+        public ICollection<Tuple<int, int>> StrikeThroughs { get; set; }
     }
 }

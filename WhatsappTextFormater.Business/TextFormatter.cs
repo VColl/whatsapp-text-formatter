@@ -2,7 +2,7 @@
 
 namespace WhatsappTextFormater.Business
 {
-    public class TextFormater
+    public class TextFormatter
     {
         public TextFormatInfo GetTextFormatInfo(string text)
         {
