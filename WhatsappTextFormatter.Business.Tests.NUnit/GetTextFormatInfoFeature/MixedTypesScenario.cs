@@ -3,11 +3,11 @@ using System;
 
 namespace WhatsappTextFormatter.Business.Tests.NUnit.GetTextFormatInfoFeature
 {
-    public class MultipleIsolatedTypesScenario
+    public class MixedTypesScenario
     {
         private readonly GetTextFormatInfoFeatureSteps _steps;
 
-        public MultipleIsolatedTypesScenario()
+        public MixedTypesScenario()
         {
             _steps = new GetTextFormatInfoFeatureSteps();
         }
@@ -19,9 +19,9 @@ namespace WhatsappTextFormatter.Business.Tests.NUnit.GetTextFormatInfoFeature
         }
 
         [Test]
-        public void SingleBoldItalicStrikeThrough()
+        public void MixedBoldItalicSingleWords()
         {
-            string inputText = "The quick *brown* _fox_ jumps over the lazy ~dog~";
+            string inputText = "The quick *_brown_* fox *_jumps*_ over _*the_* lazy _*dog*_";
 
             var expectedResult = new TextFormatInfo
             {

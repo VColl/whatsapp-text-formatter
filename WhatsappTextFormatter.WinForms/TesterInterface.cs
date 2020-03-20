@@ -1,13 +1,6 @@
 ﻿using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Web;
 using System.Windows.Forms;
 using WhatsappTextFormatter.Business;
 
@@ -39,7 +32,7 @@ namespace WhatsappTextFormatter.WinForms
                 var length = pairs.Item2 - pairs.Item1 + 1;
                 rtbText.Select(pairs.Item1, length);
 
-                rtbText.SelectionFont = new Font(rtbText.Font, FontStyle.Bold);
+                rtbText.SelectionFont = new Font(rtbText.Font, rtbText.SelectionFont.Style | FontStyle.Bold);
             }
 
             foreach (var pairs in info.Italics)
@@ -47,7 +40,7 @@ namespace WhatsappTextFormatter.WinForms
                 var length = pairs.Item2 - pairs.Item1 + 1;
                 rtbText.Select(pairs.Item1, length);
 
-                rtbText.SelectionFont = new Font(rtbText.Font, FontStyle.Italic);
+                rtbText.SelectionFont = new Font(rtbText.Font, rtbText.SelectionFont.Style | FontStyle.Italic);
             }
 
             foreach (var pairs in info.StrikeThroughs)
@@ -55,7 +48,7 @@ namespace WhatsappTextFormatter.WinForms
                 var length = pairs.Item2 - pairs.Item1 + 1;
                 rtbText.Select(pairs.Item1, length);
 
-                rtbText.SelectionFont = new Font(rtbText.Font, FontStyle.Strikeout);
+                rtbText.SelectionFont = new Font(rtbText.Font, rtbText.SelectionFont.Style | FontStyle.Strikeout);
             }
         }
     }
