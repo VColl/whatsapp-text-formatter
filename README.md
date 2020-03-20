@@ -1,1 +1,1 @@
-# whatsapp-text-formater
+# whatsapp-text-formatter
