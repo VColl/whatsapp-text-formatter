@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WhatsappTextFormatter.Busin
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WhatsappTextFormatter.Business.Tests.NUnit", "WhatsappTextFormatter.Business.Tests.NUnit\WhatsappTextFormatter.Business.Tests.NUnit.csproj", "{094E5B31-E013-4E08-939A-EA82351FA228}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WhatsappTextFormatter.WinForms", "WhatsappTextFormatter.WinForms\WhatsappTextFormatter.WinForms.csproj", "{1FFFECB8-8AC9-4FC6-BF0F-C1C6399CCB8D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{094E5B31-E013-4E08-939A-EA82351FA228}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{094E5B31-E013-4E08-939A-EA82351FA228}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{094E5B31-E013-4E08-939A-EA82351FA228}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1FFFECB8-8AC9-4FC6-BF0F-C1C6399CCB8D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1FFFECB8-8AC9-4FC6-BF0F-C1C6399CCB8D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1FFFECB8-8AC9-4FC6-BF0F-C1C6399CCB8D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1FFFECB8-8AC9-4FC6-BF0F-C1C6399CCB8D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
