@@ -1,4 +1,8 @@
 using NUnit.Framework;
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace WhatsappTextFormatter.Business.Tests.NUnit.GetTextFormatInfoFeature
 {
@@ -25,9 +29,15 @@ namespace WhatsappTextFormatter.Business.Tests.NUnit.GetTextFormatInfoFeature
         public void ThenTheResultShouldBe(TextFormatInfo expectedResult)
         {
             Assert.AreEqual(expectedResult.Text, _result.Text);
-            CollectionAssert.AreEquivalent(expectedResult.Bolds, _result.Bolds);
-            CollectionAssert.AreEquivalent(expectedResult.Italics, _result.Italics);
-            CollectionAssert.AreEquivalent(expectedResult.StrikeThroughs, _result.StrikeThroughs);
+            AssertIndexes(expectedResult.Bolds, _result.Bolds);
+            AssertIndexes(expectedResult.Italics, _result.Italics);
+            AssertIndexes(expectedResult.StrikeThroughs, _result.StrikeThroughs);
         }
+
+        private void AssertIndexes(ICollection<Tuple<int, int>> expectedIndexes, ICollection<Tuple<int, int>> actualIndexRanges) =>
+            CollectionAssert.AreEquivalent(GetIndexes(expectedIndexes), GetIndexes(actualIndexRanges));
+
+        private IEnumerable<int> GetIndexes(IEnumerable<Tuple<int, int>> indexRanges) =>
+            indexRanges.SelectMany(range => Enumerable.Range(range.Item1, range.Item2));
     }
 }

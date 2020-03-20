@@ -19,7 +19,7 @@ namespace WhatsappTextFormatter.Business.Tests.NUnit.GetTextFormatInfoFeature
         }
 
         [Test]
-        public void UnformattedTextWithoutAsterisks()
+        public void WithoutAsterisks()
         {
             string inputText = "The quick brown fox jumps over the lazy dog";
 
@@ -36,7 +36,7 @@ namespace WhatsappTextFormatter.Business.Tests.NUnit.GetTextFormatInfoFeature
         }
 
         [Test]
-        public void UnformattedTextBeginningWithAnAsterisk()
+        public void BeginningWithAnAsterisk()
         {
             string inputText = "*The quick brown fox jumps over the lazy dog";
 
@@ -53,7 +53,7 @@ namespace WhatsappTextFormatter.Business.Tests.NUnit.GetTextFormatInfoFeature
         }
 
         [Test]
-        public void UnformattedTextEndingWithAnAsterisk()
+        public void EndingWithAnAsterisk()
         {
             string inputText = "The quick brown fox jumps over the lazy dog*";
 
@@ -70,7 +70,7 @@ namespace WhatsappTextFormatter.Business.Tests.NUnit.GetTextFormatInfoFeature
         }
 
         [Test]
-        public void UnformattedTextBeginningWithTwoAsterisks()
+        public void BeginningWithTwoAsterisks()
         {
             string inputText = "**The quick brown fox jumps over the lazy dog";
 
@@ -87,13 +87,30 @@ namespace WhatsappTextFormatter.Business.Tests.NUnit.GetTextFormatInfoFeature
         }
 
         [Test]
-        public void UnformattedTextEndingWithTwoAsterisks()
+        public void EndingWithTwoAsterisks()
         {
             string inputText = "The quick brown fox jumps over the lazy dog**";
 
             var expectedResult = new TextFormatInfo
             {
                 Text = "The quick brown fox jumps over the lazy dog**",
+                Bolds = new Tuple<int, int>[] { },
+                Italics = new Tuple<int, int>[] { },
+                StrikeThroughs = new Tuple<int, int>[] { },
+            };
+
+            _steps.WhenIInputTheText(inputText);
+            _steps.ThenTheResultShouldBe(expectedResult);
+        }
+
+        [Test]
+        public void AsteriskBetweenWhiteSpaces()
+        {
+            string inputText = "The quick * brown fox* jumps over the lazy dog";
+
+            var expectedResult = new TextFormatInfo
+            {
+                Text = "The quick * brown fox* jumps over the lazy dog",
                 Bolds = new Tuple<int, int>[] { },
                 Italics = new Tuple<int, int>[] { },
                 StrikeThroughs = new Tuple<int, int>[] { },
