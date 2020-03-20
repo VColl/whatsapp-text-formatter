@@ -18,25 +18,23 @@ namespace WhatsappTextFormatter.Business
 
         public TextFormatInfo GetTextFormatInfo(string text)
         {
-            var info = new TextFormatInfo
-            {
-                Bolds = _boldTextFormatter.GetIndexRanges(text),
-                Italics = _italicTextFormatter.GetIndexRanges(text),
-                StrikeThroughs = _strikeThroughTextFormatter.GetIndexRanges(text)
-            };
+            var info = new TextFormatInfo();
 
+            info.Bolds = _boldTextFormatter.GetIndexRanges(text);
             foreach (var range in info.Bolds)
             {
                 text = text.Remove(range.Item1, 1);
                 text = text.Remove(range.Item2 + 1, 1);
             }
 
+            info.Italics = _italicTextFormatter.GetIndexRanges(text);
             foreach (var range in info.Italics)
             {
                 text = text.Remove(range.Item1, 1);
                 text = text.Remove(range.Item2 + 1, 1);
             }
 
+            info.StrikeThroughs = _strikeThroughTextFormatter.GetIndexRanges(text);
             foreach (var range in info.StrikeThroughs)
             {
                 text = text.Remove(range.Item1, 1);
