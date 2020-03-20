@@ -8,12 +8,12 @@ namespace WhatsappTextFormatter.Business.Tests.NUnit.GetTextFormatInfoFeature
 {
     public class GetTextFormatInfoFeatureSteps
     {
-        private readonly TextFormatter _textFormatter;
+        private readonly FullTextFormatter _textFormatter;
         private TextFormatInfo _result;
 
         public GetTextFormatInfoFeatureSteps()
         {
-            _textFormatter = new TextFormatter();
+            _textFormatter = new FullTextFormatter();
         }
 
         public void Setup()

@@ -136,5 +136,22 @@ namespace WhatsappTextFormatter.Business.Tests.NUnit.GetTextFormatInfoFeature
             _steps.WhenIInputTheText(inputText);
             _steps.ThenTheResultShouldBe(expectedResult);
         }
+
+        [Test]
+        public void TheInconsistentCaseOfWhatsAppWeb()
+        {
+            string inputText = "The quick *brown fox jump**s* over the lazy dog";
+
+            var expectedResult = new TextFormatInfo
+            {
+                Text = "The quick brown fox jump*s* over the lazy dog",
+                Bolds = new[] { Tuple.Create(10, 23) },
+                Italics = new Tuple<int, int>[] { },
+                StrikeThroughs = new Tuple<int, int>[] { },
+            };
+
+            _steps.WhenIInputTheText(inputText);
+            _steps.ThenTheResultShouldBe(expectedResult);
+        }
     }
 }

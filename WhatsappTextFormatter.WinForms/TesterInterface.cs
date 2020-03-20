@@ -15,13 +15,13 @@ namespace WhatsappTextFormatter.WinForms
 {
     public partial class TesterInterface : Form
     {
-        private readonly TextFormatter _formatter;
+        private readonly FullTextFormatter _formatter;
 
         public TesterInterface()
         {
             InitializeComponent();
 
-            _formatter = new TextFormatter();
+            _formatter = new FullTextFormatter();
             btFormat.Click += BtFormat_Click;
 
             rtbUnformattedText.Focus();
