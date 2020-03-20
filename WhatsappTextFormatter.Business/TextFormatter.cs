@@ -28,10 +28,9 @@ namespace WhatsappTextFormatter.Business
             if (indexOfFirstAsterisk == -1)
                 yield break;
 
-            if (!text.Substring(indexOfFirstAsterisk + 1).Contains("*"))
+            int indexOfSecondAsterisk = GetIndexOfSecondAsterisk(text, indexOfFirstAsterisk + 1);
+            if (indexOfSecondAsterisk == -1)
                 yield break;
-
-            int indexOfSecondAsterisk = text.IndexOf("*", indexOfFirstAsterisk + 1);
 
             yield return Tuple.Create(indexOfFirstAsterisk - 2 * boldCounter, indexOfSecondAsterisk - 2 * (boldCounter + 1));
 
@@ -53,6 +52,19 @@ namespace WhatsappTextFormatter.Business
                 return GetIndexOfFirstAsterisk(text, indexOfFirstAsterisk + 1);
 
             return indexOfFirstAsterisk;
+        }
+
+        private static int GetIndexOfSecondAsterisk(string text, int startIndex)
+        {
+            if (!text.Substring(startIndex).Contains("*"))
+                return -1;
+
+            int indexOfSecondAsterisk = text.IndexOf("*", startIndex);
+
+            if (text.Length > indexOfSecondAsterisk + 1 && !char.IsWhiteSpace(text[indexOfSecondAsterisk + 1]))
+                return GetIndexOfSecondAsterisk(text, indexOfSecondAsterisk + 1);
+
+            return indexOfSecondAsterisk;
         }
     }
 }
