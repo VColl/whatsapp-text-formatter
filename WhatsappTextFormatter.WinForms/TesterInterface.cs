@@ -23,7 +23,7 @@ namespace WhatsappTextFormatter.WinForms
         private void BtFormat_Click(object sender, EventArgs e)
         {
             var info = _formatter.GetTextFormatInfo(rtbUnformattedText.Text);
-            
+
             rtbText.Text = info.Text;
             rtbFormatInfo.Text = JsonConvert.SerializeObject(info, Formatting.Indented);
 
