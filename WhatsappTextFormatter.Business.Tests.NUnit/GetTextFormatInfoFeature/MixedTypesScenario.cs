@@ -25,10 +25,10 @@ namespace WhatsappTextFormatter.Business.Tests.NUnit.GetTextFormatInfoFeature
 
             var expectedResult = new TextFormatInfo
             {
-                Text = "The quick brown fox jumps over the lazy dog",
-                Bolds = new[] { Tuple.Create(10, 14) },
-                Italics = new[] { Tuple.Create(16, 18) },
-                StrikeThroughs = new[] { Tuple.Create(40, 42) },
+                Text = "The quick brown fox _jumps_ over *the* lazy dog",
+                Bolds = new[] { Tuple.Create(10, 14), Tuple.Create(20, 25), Tuple.Create(44, 46) },
+                Italics = new[] { Tuple.Create(10, 14), Tuple.Create(33, 36), Tuple.Create(44, 46) },
+                StrikeThroughs = new Tuple<int, int>[] { },
             };
 
             _steps.WhenIInputTheText(inputText);
@@ -36,16 +36,16 @@ namespace WhatsappTextFormatter.Business.Tests.NUnit.GetTextFormatInfoFeature
         }
 
         [Test]
-        public void SingleBoldStrikeThroughItalic()
+        public void MixedBoldStrikeThroughSingleWords()
         {
-            string inputText = "The quick *brown* ~fox~ jumps over the lazy _dog_";
+            string inputText = "The quick *~brown~* fox *~jumps*~ over ~*the~* lazy ~*dog*~";
 
             var expectedResult = new TextFormatInfo
             {
-                Text = "The quick brown fox jumps over the lazy dog",
-                Bolds = new[] { Tuple.Create(10, 14) },
-                Italics = new[] { Tuple.Create(40, 42) },
-                StrikeThroughs = new[] { Tuple.Create(16, 18) },
+                Text = "The quick brown fox ~jumps~ over *the* lazy dog",
+                Bolds = new[] { Tuple.Create(10, 14), Tuple.Create(20, 25), Tuple.Create(44, 46) },
+                Italics = new Tuple<int, int>[] { },
+                StrikeThroughs = new[] { Tuple.Create(10, 14), Tuple.Create(33, 36), Tuple.Create(44, 46) },
             };
 
             _steps.WhenIInputTheText(inputText);
@@ -53,67 +53,16 @@ namespace WhatsappTextFormatter.Business.Tests.NUnit.GetTextFormatInfoFeature
         }
 
         [Test]
-        public void SingleItalicBoldStrikeThrough()
+        public void MixedItalicStrikeThrougtSingleWords()
         {
-            string inputText = "The quick _brown_ *fox* jumps over the lazy ~dog~";
+            string inputText = "The quick ~_brown_~ fox ~_jumps~_ over _~the_~ lazy _~dog~_";
 
             var expectedResult = new TextFormatInfo
             {
-                Text = "The quick brown fox jumps over the lazy dog",
-                Bolds = new[] { Tuple.Create(16, 18) },
-                Italics = new[] { Tuple.Create(10, 14) },
-                StrikeThroughs = new[] { Tuple.Create(40, 42) },
-            };
-
-            _steps.WhenIInputTheText(inputText);
-            _steps.ThenTheResultShouldBe(expectedResult);
-        }
-
-        [Test]
-        public void SingleItalicStrikeThroughBold()
-        {
-            string inputText = "The quick _brown_ ~fox~ jumps over the lazy *dog*";
-
-            var expectedResult = new TextFormatInfo
-            {
-                Text = "The quick brown fox jumps over the lazy dog",
-                Bolds = new[] { Tuple.Create(40, 42) },
-                Italics = new[] { Tuple.Create(10, 14) },
-                StrikeThroughs = new[] { Tuple.Create(16, 18) },
-            };
-
-            _steps.WhenIInputTheText(inputText);
-            _steps.ThenTheResultShouldBe(expectedResult);
-        }
-
-        [Test]
-        public void SingleStrikeThroughBoldItalic()
-        {
-            string inputText = "The quick ~brown~ *fox* jumps over the lazy _dog_";
-
-            var expectedResult = new TextFormatInfo
-            {
-                Text = "The quick brown fox jumps over the lazy dog",
-                Bolds = new[] { Tuple.Create(16, 18) },
-                Italics = new[] { Tuple.Create(40, 42) },
-                StrikeThroughs = new[] { Tuple.Create(10, 14) },
-            };
-
-            _steps.WhenIInputTheText(inputText);
-            _steps.ThenTheResultShouldBe(expectedResult);
-        }
-
-        [Test]
-        public void SingleStrikeThroughItalicBold()
-        {
-            string inputText = "The quick ~brown~ _fox_ jumps over the lazy *dog*";
-
-            var expectedResult = new TextFormatInfo
-            {
-                Text = "The quick brown fox jumps over the lazy dog",
-                Bolds = new[] { Tuple.Create(40, 42) },
-                Italics = new[] { Tuple.Create(16, 18) },
-                StrikeThroughs = new[] { Tuple.Create(10, 14) },
+                Text = "The quick brown fox _jumps_ over ~the~ lazy dog",
+                Bolds = new Tuple<int, int>[] { },
+                Italics = new[] { Tuple.Create(10, 14), Tuple.Create(33, 36), Tuple.Create(44, 46) },
+                StrikeThroughs = new[] { Tuple.Create(10, 14), Tuple.Create(20, 25), Tuple.Create(44, 46) },
             };
 
             _steps.WhenIInputTheText(inputText);

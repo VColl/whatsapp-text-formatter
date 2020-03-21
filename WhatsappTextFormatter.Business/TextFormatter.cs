@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace WhatsappTextFormatter.Business
 {
@@ -41,11 +42,9 @@ namespace WhatsappTextFormatter.Business
             if (!text.Substring(indexOfFirstMarker + 1).Contains(_marker))
                 return -1;
 
-            if ((indexOfFirstMarker != 0 && !char.IsWhiteSpace(text[indexOfFirstMarker - 1]))
-                || (char.IsWhiteSpace(text[indexOfFirstMarker + 1])))
-                return GetIndexOfFirstMarker(text, indexOfFirstMarker + 1);
-
-            return indexOfFirstMarker;
+            return IsValidFirstMarker(text, indexOfFirstMarker)
+                ? indexOfFirstMarker
+                : GetIndexOfFirstMarker(text, indexOfFirstMarker + 1);
         }
 
         private int GetIndexOfSecondMarker(string text, int startIndex)
@@ -55,16 +54,20 @@ namespace WhatsappTextFormatter.Business
 
             int indexOfSecondMarker = text.IndexOf(_marker, startIndex);
 
-            if (text.Length == indexOfSecondMarker + 1)
-                return indexOfSecondMarker;
-
-            if (char.IsWhiteSpace(text[indexOfSecondMarker + 1]))
-                return indexOfSecondMarker;
-
-            if (text[indexOfSecondMarker + 1].ToString() == _marker)
-                return indexOfSecondMarker;
-
-            return GetIndexOfSecondMarker(text, indexOfSecondMarker + 1);
+            return IsValidSecondMarker(text, indexOfSecondMarker)
+                ? indexOfSecondMarker
+                : GetIndexOfSecondMarker(text, indexOfSecondMarker + 1);
         }
+
+        private bool IsValidFirstMarker(string text, int indexOfFirstMarker) =>
+            !char.IsWhiteSpace(text[indexOfFirstMarker + 1])
+            && (indexOfFirstMarker == 0
+                || char.IsWhiteSpace(text[indexOfFirstMarker - 1])
+                || Markers.All.Except(new[] { _marker }).Contains(text[indexOfFirstMarker - 1].ToString()));
+
+        private bool IsValidSecondMarker(string text, int indexOfSecondMarker) =>
+            text.Length == indexOfSecondMarker + 1
+            || char.IsWhiteSpace(text[indexOfSecondMarker + 1])
+            || Markers.All.Contains(text[indexOfSecondMarker + 1].ToString());
     }
 }

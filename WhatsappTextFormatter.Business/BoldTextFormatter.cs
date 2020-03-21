@@ -3,6 +3,6 @@
     internal class BoldTextFormatter : TextFormatter
     {
         public BoldTextFormatter()
-            : base("*") { }
+            : base(Markers.Bold) { }
     }
 }

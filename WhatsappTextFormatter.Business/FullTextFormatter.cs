@@ -69,8 +69,5 @@ namespace WhatsappTextFormatter.Business
 
             return info;
         }
-
-        private IEnumerable<int> GetIndexes(IEnumerable<Tuple<int, int>> indexRanges) =>
-            indexRanges.SelectMany(range => Enumerable.Range(range.Item1, range.Item2));
     }
 }

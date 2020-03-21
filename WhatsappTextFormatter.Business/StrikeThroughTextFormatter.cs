@@ -3,6 +3,6 @@
     internal class StrikeThroughTextFormatter : TextFormatter
     {
         public StrikeThroughTextFormatter()
-            : base("~") { }
+            : base(Markers.StrikeThrough) { }
     }
 }

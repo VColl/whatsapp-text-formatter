@@ -3,6 +3,6 @@
     internal class ItalicTextFormatter : TextFormatter
     {
         public ItalicTextFormatter()
-            : base("_") { }
+            : base(Markers.Italic) { }
     }
 }
