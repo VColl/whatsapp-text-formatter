@@ -22,50 +22,134 @@ namespace WhatsappTextFormatter.Business
             var info = new TextFormatInfo();
 
             info.Bolds = _boldTextFormatter.GetIndexRanges(text);
-            foreach (var range in info.Bolds)
-            {
-                text = text.Remove(range.Item1, 1);
-                text = text.Remove(range.Item2 + 1, 1);
-            }
-
             info.Italics = _italicTextFormatter.GetIndexRanges(text);
-            foreach (var range in info.Italics)
+            info.StrikeThroughs = _strikeThroughTextFormatter.GetIndexRanges(text);
+
+            var invalidBolds = new List<Tuple<int, int>>();
+            foreach (var boldRange in info.Bolds)
             {
-                text = text.Remove(range.Item1, 1);
-                text = text.Remove(range.Item2 + 1, 1);
+                foreach (var italicRange in info.Italics)
+                {
+                    if (italicRange.Item1 < boldRange.Item1 && boldRange.Item1 < italicRange.Item2 && italicRange.Item2 < boldRange.Item2)
+                    {
+                        invalidBolds.Add(boldRange);
+                        break;
+                    }
+                }
+
+                foreach (var strikeThroughRange in info.StrikeThroughs)
+                {
+                    if (strikeThroughRange.Item1 < boldRange.Item1 && boldRange.Item1 < strikeThroughRange.Item2 && strikeThroughRange.Item2 < boldRange.Item2)
+                    {
+                        invalidBolds.Add(boldRange);
+                        break;
+                    }
+                }
             }
 
-            info.StrikeThroughs = _strikeThroughTextFormatter.GetIndexRanges(text);
-            foreach (var range in info.StrikeThroughs)
+            var invalidItalics = new List<Tuple<int, int>>();
+            foreach (var italicRange in info.Italics)
             {
-                text = text.Remove(range.Item1, 1);
-                text = text.Remove(range.Item2 + 1, 1);
+                foreach (var boldRange in info.Bolds)
+                {
+                    if (boldRange.Item1 < italicRange.Item1 && italicRange.Item1 < boldRange.Item2 && boldRange.Item2 < italicRange.Item2)
+                    {
+                        invalidItalics.Add(italicRange);
+                        break;
+                    }
+                }
+
+                foreach (var strikeThroughRange in info.StrikeThroughs)
+                {
+                    if (strikeThroughRange.Item1 < italicRange.Item1 && italicRange.Item1 < strikeThroughRange.Item2 && strikeThroughRange.Item2 < italicRange.Item2)
+                    {
+                        invalidItalics.Add(italicRange);
+                        break;
+                    }
+                }
+            }
+
+            var invalidStrikeThroughs = new List<Tuple<int, int>>();
+            foreach (var strikeThroughRange in info.StrikeThroughs)
+            {
+                foreach (var boldRange in info.Bolds)
+                {
+                    if (boldRange.Item1 < strikeThroughRange.Item1 && strikeThroughRange.Item1 < boldRange.Item2 && boldRange.Item2 < strikeThroughRange.Item2)
+                    {
+                        invalidStrikeThroughs.Add(strikeThroughRange);
+                        break;
+                    }
+                }
+
+                foreach (var italicRange in info.Italics)
+                {
+                    if (italicRange.Item1 < strikeThroughRange.Item1 && strikeThroughRange.Item1 < italicRange.Item2 && italicRange.Item2 < strikeThroughRange.Item2)
+                    {
+                        invalidStrikeThroughs.Add(strikeThroughRange);
+                        break;
+                    }
+                }
+            }
+
+            info.Bolds = info.Bolds.Except(invalidBolds);
+            info.Italics = info.Italics.Except(invalidItalics);
+            info.StrikeThroughs = info.StrikeThroughs.Except(invalidStrikeThroughs);
+
+            var indexesToBeRemoved = info.Bolds.SelectMany(r => new[] { r.Item1, r.Item2 })
+                .Union(info.Italics.SelectMany(r => new[] { r.Item1, r.Item2 }))
+                .Union(info.StrikeThroughs.SelectMany(r => new[] { r.Item1, r.Item2 }))
+                .OrderBy(i => i);
+
+            int counter = 0;
+            foreach (var index in indexesToBeRemoved)
+                text = text.Remove(index - counter++, 1);
+
+            var fixedBolds = new List<Tuple<int, int>>();
+            foreach (var boldRange in info.Bolds)
+            {
+                var count1 = info.Bolds.Count(r => r.Item1 < boldRange.Item1) + info.Bolds.Count(r => r.Item2 < boldRange.Item1)
+                    + info.Italics.Count(r => r.Item1 < boldRange.Item1) + info.Italics.Count(r => r.Item2 < boldRange.Item1)
+                    + info.StrikeThroughs.Count(r => r.Item1 < boldRange.Item1) + info.StrikeThroughs.Count(r => r.Item2 < boldRange.Item1);
+
+                var count2 = info.Bolds.Count(r => r.Item1 < boldRange.Item2) + info.Bolds.Count(r => r.Item2 <= boldRange.Item2)
+                    + info.Italics.Count(r => r.Item1 < boldRange.Item2) + info.Italics.Count(r => r.Item2 <= boldRange.Item2)
+                    + info.StrikeThroughs.Count(r => r.Item1 < boldRange.Item2) + info.StrikeThroughs.Count(r => r.Item2 <= boldRange.Item2);
+
+                fixedBolds.Add(Tuple.Create(boldRange.Item1 - count1, boldRange.Item2 - count2));
             }
 
             var fixedItalics = new List<Tuple<int, int>>();
             foreach (var italicRange in info.Italics)
             {
-                var count1 = info.StrikeThroughs.Count(r => r.Item1 < italicRange.Item1) + info.StrikeThroughs.Count(r => r.Item2 < italicRange.Item1);
-                var count2 = info.StrikeThroughs.Count(r => r.Item1 < italicRange.Item2) + info.StrikeThroughs.Count(r => r.Item2 < italicRange.Item2);
+                var count1 = info.Bolds.Count(r => r.Item1 < italicRange.Item1) + info.Bolds.Count(r => r.Item2 < italicRange.Item1)
+                    + info.Italics.Count(r => r.Item1 < italicRange.Item1) + info.Italics.Count(r => r.Item2 < italicRange.Item1)
+                    + info.StrikeThroughs.Count(r => r.Item1 < italicRange.Item1) + info.StrikeThroughs.Count(r => r.Item2 < italicRange.Item1);
+
+                var count2 = info.Bolds.Count(r => r.Item1 < italicRange.Item2) + info.Bolds.Count(r => r.Item2 <= italicRange.Item2)
+                    + info.Italics.Count(r => r.Item1 < italicRange.Item2) + info.Italics.Count(r => r.Item2 <= italicRange.Item2)
+                    + info.StrikeThroughs.Count(r => r.Item1 < italicRange.Item2) + info.StrikeThroughs.Count(r => r.Item2 <= italicRange.Item2);
 
                 fixedItalics.Add(Tuple.Create(italicRange.Item1 - count1, italicRange.Item2 - count2));
             }
 
-            var fixedBolds = new List<Tuple<int, int>>();
-            foreach (var boldRange in info.Bolds)
+            var fixedStrikeThroughs = new List<Tuple<int, int>>();
+            foreach (var strikeThroughRange in info.StrikeThroughs)
             {
-                var count1 = info.Italics.Count(r => r.Item1 < boldRange.Item1) + info.Italics.Count(r => r.Item2 < boldRange.Item1)
-                    + info.StrikeThroughs.Count(r => r.Item1 < boldRange.Item1) + info.StrikeThroughs.Count(r => r.Item2 < boldRange.Item1);
+                var count1 = info.Bolds.Count(r => r.Item1 < strikeThroughRange.Item1) + info.Bolds.Count(r => r.Item2 < strikeThroughRange.Item1)
+                    + info.Italics.Count(r => r.Item1 < strikeThroughRange.Item1) + info.Italics.Count(r => r.Item2 < strikeThroughRange.Item1)
+                    + info.StrikeThroughs.Count(r => r.Item1 < strikeThroughRange.Item1) + info.StrikeThroughs.Count(r => r.Item2 < strikeThroughRange.Item1);
 
-                var count2 = info.Italics.Count(r => r.Item1 < boldRange.Item2) + info.Italics.Count(r => r.Item2 < boldRange.Item2)
-                    + info.StrikeThroughs.Count(r => r.Item1 < boldRange.Item2) + info.StrikeThroughs.Count(r => r.Item2 < boldRange.Item2);
+                var count2 = info.Bolds.Count(r => r.Item1 < strikeThroughRange.Item2) + info.Bolds.Count(r => r.Item2 <= strikeThroughRange.Item2)
+                    + info.Italics.Count(r => r.Item1 < strikeThroughRange.Item2) + info.Italics.Count(r => r.Item2 <= strikeThroughRange.Item2)
+                    + info.StrikeThroughs.Count(r => r.Item1 < strikeThroughRange.Item2) + info.StrikeThroughs.Count(r => r.Item2 <= strikeThroughRange.Item2);
 
-                fixedBolds.Add(Tuple.Create(boldRange.Item1 - count1, boldRange.Item2 - count2));
+                fixedStrikeThroughs.Add(Tuple.Create(strikeThroughRange.Item1 - count1, strikeThroughRange.Item2 - count2));
             }
 
             info.Text = text;
             info.Bolds = fixedBolds;
             info.Italics = fixedItalics;
+            info.StrikeThroughs = fixedStrikeThroughs;
 
             return info;
         }

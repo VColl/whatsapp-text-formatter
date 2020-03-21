@@ -14,9 +14,9 @@ namespace WhatsappTextFormatter.Business
         }
 
         public IEnumerable<Tuple<int, int>> GetIndexRanges(string text) =>
-            GetIndexRanges(text, 0, 0);
+            GetIndexRanges(text, 0);
 
-        private IEnumerable<Tuple<int, int>> GetIndexRanges(string text, int startIndex, int markedTextCounter)
+        private IEnumerable<Tuple<int, int>> GetIndexRanges(string text, int startIndex)
         {
             int indexOfFirstMarker = GetIndexOfFirstMarker(text, startIndex);
             if (indexOfFirstMarker == -1)
@@ -26,9 +26,9 @@ namespace WhatsappTextFormatter.Business
             if (indexOfSecondMarker == -1)
                 yield break;
 
-            yield return Tuple.Create(indexOfFirstMarker - 2 * markedTextCounter, indexOfSecondMarker - 2 * (markedTextCounter + 1));
+            yield return Tuple.Create(indexOfFirstMarker, indexOfSecondMarker);
 
-            foreach (var range in GetIndexRanges(text, indexOfSecondMarker + 1, markedTextCounter + 1))
+            foreach (var range in GetIndexRanges(text, indexOfSecondMarker + 1))
                 yield return range;
         }
 
