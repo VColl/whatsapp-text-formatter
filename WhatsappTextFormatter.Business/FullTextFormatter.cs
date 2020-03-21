@@ -25,71 +25,9 @@ namespace WhatsappTextFormatter.Business
             info.Italics = _italicTextFormatter.GetIndexRanges(text);
             info.StrikeThroughs = _strikeThroughTextFormatter.GetIndexRanges(text);
 
-            var invalidBolds = new List<Tuple<int, int>>();
-            foreach (var boldRange in info.Bolds)
-            {
-                foreach (var italicRange in info.Italics)
-                {
-                    if (italicRange.Item1 < boldRange.Item1 && boldRange.Item1 < italicRange.Item2 && italicRange.Item2 < boldRange.Item2)
-                    {
-                        invalidBolds.Add(boldRange);
-                        break;
-                    }
-                }
-
-                foreach (var strikeThroughRange in info.StrikeThroughs)
-                {
-                    if (strikeThroughRange.Item1 < boldRange.Item1 && boldRange.Item1 < strikeThroughRange.Item2 && strikeThroughRange.Item2 < boldRange.Item2)
-                    {
-                        invalidBolds.Add(boldRange);
-                        break;
-                    }
-                }
-            }
-
-            var invalidItalics = new List<Tuple<int, int>>();
-            foreach (var italicRange in info.Italics)
-            {
-                foreach (var boldRange in info.Bolds)
-                {
-                    if (boldRange.Item1 < italicRange.Item1 && italicRange.Item1 < boldRange.Item2 && boldRange.Item2 < italicRange.Item2)
-                    {
-                        invalidItalics.Add(italicRange);
-                        break;
-                    }
-                }
-
-                foreach (var strikeThroughRange in info.StrikeThroughs)
-                {
-                    if (strikeThroughRange.Item1 < italicRange.Item1 && italicRange.Item1 < strikeThroughRange.Item2 && strikeThroughRange.Item2 < italicRange.Item2)
-                    {
-                        invalidItalics.Add(italicRange);
-                        break;
-                    }
-                }
-            }
-
-            var invalidStrikeThroughs = new List<Tuple<int, int>>();
-            foreach (var strikeThroughRange in info.StrikeThroughs)
-            {
-                foreach (var boldRange in info.Bolds)
-                {
-                    if (boldRange.Item1 < strikeThroughRange.Item1 && strikeThroughRange.Item1 < boldRange.Item2 && boldRange.Item2 < strikeThroughRange.Item2)
-                    {
-                        invalidStrikeThroughs.Add(strikeThroughRange);
-                        break;
-                    }
-                }
-
-                foreach (var italicRange in info.Italics)
-                {
-                    if (italicRange.Item1 < strikeThroughRange.Item1 && strikeThroughRange.Item1 < italicRange.Item2 && italicRange.Item2 < strikeThroughRange.Item2)
-                    {
-                        invalidStrikeThroughs.Add(strikeThroughRange);
-                        break;
-                    }
-                }
-            }
+            var invalidBolds = GetInvalidRanges(info.Bolds, info.Italics.Union(info.StrikeThroughs));
+            var invalidItalics = GetInvalidRanges(info.Italics, info.Bolds.Union(info.StrikeThroughs));
+            var invalidStrikeThroughs = GetInvalidRanges(info.StrikeThroughs, info.Bolds.Union(info.Italics));
 
             info.Bolds = info.Bolds.Except(invalidBolds);
             info.Italics = info.Italics.Except(invalidItalics);
@@ -104,47 +42,9 @@ namespace WhatsappTextFormatter.Business
             foreach (var index in indexesToBeRemoved)
                 text = text.Remove(index - counter++, 1);
 
-            var fixedBolds = new List<Tuple<int, int>>();
-            foreach (var boldRange in info.Bolds)
-            {
-                var count1 = info.Bolds.Count(r => r.Item1 < boldRange.Item1) + info.Bolds.Count(r => r.Item2 < boldRange.Item1)
-                    + info.Italics.Count(r => r.Item1 < boldRange.Item1) + info.Italics.Count(r => r.Item2 < boldRange.Item1)
-                    + info.StrikeThroughs.Count(r => r.Item1 < boldRange.Item1) + info.StrikeThroughs.Count(r => r.Item2 < boldRange.Item1);
-
-                var count2 = info.Bolds.Count(r => r.Item1 < boldRange.Item2) + info.Bolds.Count(r => r.Item2 <= boldRange.Item2)
-                    + info.Italics.Count(r => r.Item1 < boldRange.Item2) + info.Italics.Count(r => r.Item2 <= boldRange.Item2)
-                    + info.StrikeThroughs.Count(r => r.Item1 < boldRange.Item2) + info.StrikeThroughs.Count(r => r.Item2 <= boldRange.Item2);
-
-                fixedBolds.Add(Tuple.Create(boldRange.Item1 - count1, boldRange.Item2 - count2));
-            }
-
-            var fixedItalics = new List<Tuple<int, int>>();
-            foreach (var italicRange in info.Italics)
-            {
-                var count1 = info.Bolds.Count(r => r.Item1 < italicRange.Item1) + info.Bolds.Count(r => r.Item2 < italicRange.Item1)
-                    + info.Italics.Count(r => r.Item1 < italicRange.Item1) + info.Italics.Count(r => r.Item2 < italicRange.Item1)
-                    + info.StrikeThroughs.Count(r => r.Item1 < italicRange.Item1) + info.StrikeThroughs.Count(r => r.Item2 < italicRange.Item1);
-
-                var count2 = info.Bolds.Count(r => r.Item1 < italicRange.Item2) + info.Bolds.Count(r => r.Item2 <= italicRange.Item2)
-                    + info.Italics.Count(r => r.Item1 < italicRange.Item2) + info.Italics.Count(r => r.Item2 <= italicRange.Item2)
-                    + info.StrikeThroughs.Count(r => r.Item1 < italicRange.Item2) + info.StrikeThroughs.Count(r => r.Item2 <= italicRange.Item2);
-
-                fixedItalics.Add(Tuple.Create(italicRange.Item1 - count1, italicRange.Item2 - count2));
-            }
-
-            var fixedStrikeThroughs = new List<Tuple<int, int>>();
-            foreach (var strikeThroughRange in info.StrikeThroughs)
-            {
-                var count1 = info.Bolds.Count(r => r.Item1 < strikeThroughRange.Item1) + info.Bolds.Count(r => r.Item2 < strikeThroughRange.Item1)
-                    + info.Italics.Count(r => r.Item1 < strikeThroughRange.Item1) + info.Italics.Count(r => r.Item2 < strikeThroughRange.Item1)
-                    + info.StrikeThroughs.Count(r => r.Item1 < strikeThroughRange.Item1) + info.StrikeThroughs.Count(r => r.Item2 < strikeThroughRange.Item1);
-
-                var count2 = info.Bolds.Count(r => r.Item1 < strikeThroughRange.Item2) + info.Bolds.Count(r => r.Item2 <= strikeThroughRange.Item2)
-                    + info.Italics.Count(r => r.Item1 < strikeThroughRange.Item2) + info.Italics.Count(r => r.Item2 <= strikeThroughRange.Item2)
-                    + info.StrikeThroughs.Count(r => r.Item1 < strikeThroughRange.Item2) + info.StrikeThroughs.Count(r => r.Item2 <= strikeThroughRange.Item2);
-
-                fixedStrikeThroughs.Add(Tuple.Create(strikeThroughRange.Item1 - count1, strikeThroughRange.Item2 - count2));
-            }
+            var fixedBolds = GetFixedRanges(info.Bolds, info);
+            var fixedItalics = GetFixedRanges(info.Italics, info);
+            var fixedStrikeThroughs = GetFixedRanges(info.StrikeThroughs, info);
 
             info.Text = text;
             info.Bolds = fixedBolds;
@@ -152,6 +52,43 @@ namespace WhatsappTextFormatter.Business
             info.StrikeThroughs = fixedStrikeThroughs;
 
             return info;
+        }
+
+        private IEnumerable<Tuple<int, int>> GetInvalidRanges(IEnumerable<Tuple<int, int>> rangesToBeValidated, IEnumerable<Tuple<int, int>> validRanges)
+        {
+            var invalidRanges = new List<Tuple<int, int>>();
+            foreach (var boldRange in rangesToBeValidated)
+            {
+                foreach (var italicRange in validRanges)
+                {
+                    if (italicRange.Item1 < boldRange.Item1 && boldRange.Item1 < italicRange.Item2 && italicRange.Item2 < boldRange.Item2)
+                    {
+                        invalidRanges.Add(boldRange);
+                        break;
+                    }
+                }
+            }
+
+            return invalidRanges;
+        }
+
+        private IEnumerable<Tuple<int, int>> GetFixedRanges(IEnumerable<Tuple<int, int>> rangesToBeFixed, TextFormatInfo info)
+        {
+            var fixedRanges = new List<Tuple<int, int>>();
+            foreach (var range in rangesToBeFixed)
+            {
+                var count1 = info.Bolds.Count(r => r.Item1 < range.Item1) + info.Bolds.Count(r => r.Item2 < range.Item1)
+                    + info.Italics.Count(r => r.Item1 < range.Item1) + info.Italics.Count(r => r.Item2 < range.Item1)
+                    + info.StrikeThroughs.Count(r => r.Item1 < range.Item1) + info.StrikeThroughs.Count(r => r.Item2 < range.Item1);
+
+                var count2 = info.Bolds.Count(r => r.Item1 < range.Item2) + info.Bolds.Count(r => r.Item2 <= range.Item2)
+                    + info.Italics.Count(r => r.Item1 < range.Item2) + info.Italics.Count(r => r.Item2 <= range.Item2)
+                    + info.StrikeThroughs.Count(r => r.Item1 < range.Item2) + info.StrikeThroughs.Count(r => r.Item2 <= range.Item2);
+
+                fixedRanges.Add(Tuple.Create(range.Item1 - count1, range.Item2 - count2));
+            }
+
+            return fixedRanges;
         }
     }
 }
