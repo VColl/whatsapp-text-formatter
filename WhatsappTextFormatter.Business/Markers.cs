@@ -4,11 +4,11 @@ namespace WhatsappTextFormatter.Business
 {
     internal static class Markers
     {
-        public const string Bold = "*";
-        public const string Italic = "_";
-        public const string StrikeThrough = "~";
+        public const char Bold = '*';
+        public const char Italic = '_';
+        public const char StrikeThrough = '~';
 
-        public static ICollection<string> All = new HashSet<string>
+        public static ICollection<char> All = new HashSet<char>
         {
             Bold,
             Italic,

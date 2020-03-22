@@ -5,17 +5,13 @@ namespace WhatsappTextFormatter.Business.Tests.NUnit.GetTextFormatInfoFeature
 {
     public class SomethingBoldScenario
     {
-        private readonly GetTextFormatInfoFeatureSteps _steps;
-
-        public SomethingBoldScenario()
-        {
-            _steps = new GetTextFormatInfoFeatureSteps();
-        }
+        private GetTextFormatInfoFeatureSteps _steps;
 
         [SetUp]
         public void Setup()
         {
             _steps.Setup();
+            _steps = new GetTextFormatInfoFeatureSteps();
         }
 
         [Test]

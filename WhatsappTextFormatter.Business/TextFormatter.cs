@@ -6,9 +6,9 @@ namespace WhatsappTextFormatter.Business
 {
     internal abstract class TextFormatter
     {
-        private readonly string _marker;
+        private readonly char _marker;
 
-        public TextFormatter(string marker)
+        public TextFormatter(char marker)
         {
             _marker = marker;
         }
@@ -63,11 +63,11 @@ namespace WhatsappTextFormatter.Business
             !char.IsWhiteSpace(text[indexOfFirstMarker + 1])
             && (indexOfFirstMarker == 0
                 || char.IsWhiteSpace(text[indexOfFirstMarker - 1])
-                || Markers.All.Except(new[] { _marker }).Contains(text[indexOfFirstMarker - 1].ToString()));
+                || Markers.All.Except(new[] { _marker }).Contains(text[indexOfFirstMarker - 1]));
 
         private bool IsValidSecondMarker(string text, int indexOfSecondMarker) =>
             text.Length == indexOfSecondMarker + 1
             || char.IsWhiteSpace(text[indexOfSecondMarker + 1])
-            || Markers.All.Contains(text[indexOfSecondMarker + 1].ToString());
+            || Markers.All.Contains(text[indexOfSecondMarker + 1]);
     }
 }
