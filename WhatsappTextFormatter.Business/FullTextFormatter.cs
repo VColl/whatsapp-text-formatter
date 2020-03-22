@@ -6,12 +6,12 @@ namespace WhatsappTextFormatter.Business
 {
     public class FullTextFormatter
     {
-        private int _firstBoldMarkerIndex = -1;
-        private int _firstItalicMarkerIndex = -1;
-        private int _firstStrikeThroughMarkerIndex = -1;
-
         public TextFormatInfo GetTextFormatInfo(string text)
         {
+            int firstBoldMarkerIndex = -1;
+            int firstItalicMarkerIndex = -1;
+            int firstStrikeThroughMarkerIndex = -1;
+
             var info = new TextFormatInfo();
 
             for (int i = 0; i < text.Length; i++)
@@ -20,74 +20,74 @@ namespace WhatsappTextFormatter.Business
 
                 if (character == Markers.Bold)
                 {
-                    if (_firstBoldMarkerIndex == -1)
+                    if (firstBoldMarkerIndex == -1)
                     {
                         if (IsValidFirstMarker(character, i, text))
                         {
-                            _firstBoldMarkerIndex = i;
+                            firstBoldMarkerIndex = i;
                             continue;
                         }
                     }
 
                     else if (IsValidSecondMarker(i, text))
                     {
-                        info.Bolds.Add(Tuple.Create(_firstBoldMarkerIndex, i));
-                        if (_firstBoldMarkerIndex < _firstItalicMarkerIndex)
-                            _firstItalicMarkerIndex = -1;
+                        info.Bolds.Add(Tuple.Create(firstBoldMarkerIndex, i));
+                        if (firstBoldMarkerIndex < firstItalicMarkerIndex)
+                            firstItalicMarkerIndex = -1;
 
-                        if (_firstBoldMarkerIndex < _firstStrikeThroughMarkerIndex)
-                            _firstStrikeThroughMarkerIndex = -1;
+                        if (firstBoldMarkerIndex < firstStrikeThroughMarkerIndex)
+                            firstStrikeThroughMarkerIndex = -1;
 
-                        _firstBoldMarkerIndex = -1;
+                        firstBoldMarkerIndex = -1;
                     }
 
                 }
 
                 if (character == Markers.Italic)
                 {
-                    if (_firstItalicMarkerIndex == -1)
+                    if (firstItalicMarkerIndex == -1)
                     {
                         if (IsValidFirstMarker(character, i, text))
                         {
-                            _firstItalicMarkerIndex = i;
+                            firstItalicMarkerIndex = i;
                             continue;
                         }
                     }
 
                     else if (IsValidSecondMarker(i, text))
                     {
-                        info.Italics.Add(Tuple.Create(_firstItalicMarkerIndex, i));
-                        if (_firstItalicMarkerIndex < _firstBoldMarkerIndex)
-                            _firstBoldMarkerIndex = -1;
+                        info.Italics.Add(Tuple.Create(firstItalicMarkerIndex, i));
+                        if (firstItalicMarkerIndex < firstBoldMarkerIndex)
+                            firstBoldMarkerIndex = -1;
 
-                        if (_firstItalicMarkerIndex < _firstStrikeThroughMarkerIndex)
-                            _firstStrikeThroughMarkerIndex = -1;
+                        if (firstItalicMarkerIndex < firstStrikeThroughMarkerIndex)
+                            firstStrikeThroughMarkerIndex = -1;
 
-                        _firstItalicMarkerIndex = -1;
+                        firstItalicMarkerIndex = -1;
                     }
                 }
 
                 if (character == Markers.StrikeThrough)
                 {
-                    if (_firstStrikeThroughMarkerIndex == -1)
+                    if (firstStrikeThroughMarkerIndex == -1)
                     {
                         if (IsValidFirstMarker(character, i, text))
                         {
-                            _firstStrikeThroughMarkerIndex = i;
+                            firstStrikeThroughMarkerIndex = i;
                             continue;
                         }
                     }
 
                     else if (IsValidSecondMarker(i, text))
                     {
-                        info.StrikeThroughs.Add(Tuple.Create(_firstStrikeThroughMarkerIndex, i));
-                        if (_firstStrikeThroughMarkerIndex < _firstBoldMarkerIndex)
-                            _firstBoldMarkerIndex = -1;
+                        info.StrikeThroughs.Add(Tuple.Create(firstStrikeThroughMarkerIndex, i));
+                        if (firstStrikeThroughMarkerIndex < firstBoldMarkerIndex)
+                            firstBoldMarkerIndex = -1;
 
-                        if (_firstStrikeThroughMarkerIndex < _firstItalicMarkerIndex)
-                            _firstItalicMarkerIndex = -1;
+                        if (firstStrikeThroughMarkerIndex < firstItalicMarkerIndex)
+                            firstItalicMarkerIndex = -1;
 
-                        _firstStrikeThroughMarkerIndex = -1;
+                        firstStrikeThroughMarkerIndex = -1;
                     }
                 }
             }
@@ -101,10 +101,14 @@ namespace WhatsappTextFormatter.Business
             foreach (var index in indexesToBeRemoved)
                 text = text.Remove(index - counter++, 1);
 
+            var fixedBolds = GetFixedRanges(info.Bolds, info);
+            var fixedItalics = GetFixedRanges(info.Italics, info);
+            var fixedStrikeThroughs = GetFixedRanges(info.StrikeThroughs, info);
+
             info.Text = text;
-            info.Bolds = GetFixedRanges(info.Bolds, info);
-            info.Italics = GetFixedRanges(info.Italics, info);
-            info.StrikeThroughs = GetFixedRanges(info.StrikeThroughs, info);
+            info.Bolds = fixedBolds;
+            info.Italics = fixedItalics;
+            info.StrikeThroughs = fixedStrikeThroughs;
 
             return info;
         }
@@ -117,9 +121,10 @@ namespace WhatsappTextFormatter.Business
                 || Markers.All.Except(new[] { marker }).Contains(text[markerIndex - 1]));
 
         private bool IsValidSecondMarker(int markerIndex, string text) =>
-            text.Length == markerIndex + 1
-            || char.IsWhiteSpace(text[markerIndex + 1])
-            || Markers.All.Contains(text[markerIndex + 1]);
+            !char.IsWhiteSpace(text[markerIndex - 1])
+            && (text.Length == markerIndex + 1
+                || char.IsWhiteSpace(text[markerIndex + 1])
+                || Markers.All.Contains(text[markerIndex + 1]));
 
         private ICollection<Tuple<int, int>> GetFixedRanges(IEnumerable<Tuple<int, int>> rangesToBeFixed, TextFormatInfo info)
         {

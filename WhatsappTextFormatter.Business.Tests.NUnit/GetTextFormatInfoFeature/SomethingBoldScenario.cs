@@ -7,11 +7,15 @@ namespace WhatsappTextFormatter.Business.Tests.NUnit.GetTextFormatInfoFeature
     {
         private GetTextFormatInfoFeatureSteps _steps;
 
+        public SomethingBoldScenario()
+        {
+            _steps = new GetTextFormatInfoFeatureSteps();
+        }
+
         [SetUp]
         public void Setup()
         {
             _steps.Setup();
-            _steps = new GetTextFormatInfoFeatureSteps();
         }
 
         [Test]
