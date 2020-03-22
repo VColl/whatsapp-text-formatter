@@ -58,7 +58,7 @@ namespace WhatsappTextFormatter.Business
                 }
             }
 
-            else if (IsValidSecondMarker(index, text))
+            else if (IsValidSecondMarker(character, index, text))
             {
                 ranges.Add(Tuple.Create(firstMarkerIndexCandidate, index));
                 if (firstMarkerIndexCandidate <= _firstBoldMarkerIndex)
@@ -121,12 +121,14 @@ namespace WhatsappTextFormatter.Business
         private bool IsValidFirstMarker(char marker, int markerIndex, string text) =>
             (text.Length > markerIndex + 1)
             && !char.IsWhiteSpace(text[markerIndex + 1])
+            && (text[markerIndex + 1] != marker || (text.Length > markerIndex + 2 && text[markerIndex + 2] != marker))
             && (markerIndex == 0
                 || char.IsWhiteSpace(text[markerIndex - 1])
                 || Markers.All.Except(new[] { marker }).Contains(text[markerIndex - 1]));
 
-        private bool IsValidSecondMarker(int markerIndex, string text) =>
+        private bool IsValidSecondMarker(char marker, int markerIndex, string text) =>
             !char.IsWhiteSpace(text[markerIndex - 1])
+            && text[markerIndex - 1] != marker
             && (text.Length == markerIndex + 1
                 || char.IsWhiteSpace(text[markerIndex + 1])
                 || Markers.All.Contains(text[markerIndex + 1]));
