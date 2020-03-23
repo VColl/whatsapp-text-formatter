@@ -1,13 +1,13 @@
 ﻿using NUnit.Framework;
 using System;
 
-namespace WhatsappTextFormatter.Business.Tests.NUnit.GetTextFormatInfoFeature
+namespace WhatsappTextFormatter.Business.Tests.NUnit.GetTextFormatInfoFeature.Scenarios.JustMarkers
 {
-    public class UnformattedTextScenario
+    public class JustStrikeThroughMarkersScenario
     {
-        private readonly GetTextFormatInfoFeatureSteps _steps;
+        private GetTextFormatInfoFeatureSteps _steps;
 
-        public UnformattedTextScenario()
+        public JustStrikeThroughMarkersScenario()
         {
             _steps = new GetTextFormatInfoFeatureSteps();
         }
@@ -19,13 +19,13 @@ namespace WhatsappTextFormatter.Business.Tests.NUnit.GetTextFormatInfoFeature
         }
 
         [Test]
-        public void WithoutAsterisks()
+        public void SingleStrikeThroughMarker()
         {
-            string inputText = "The quick brown fox jumps over the lazy dog";
+            string inputText = "~";
 
             var expectedResult = new TextFormatInfo
             {
-                Text = "The quick brown fox jumps over the lazy dog",
+                Text = "~",
                 Bolds = new Tuple<int, int>[] { },
                 Italics = new Tuple<int, int>[] { },
                 StrikeThroughs = new Tuple<int, int>[] { },
@@ -36,13 +36,13 @@ namespace WhatsappTextFormatter.Business.Tests.NUnit.GetTextFormatInfoFeature
         }
 
         [Test]
-        public void BeginningWithAnAsterisk()
+        public void TwoStrikeThroughMarkers()
         {
-            string inputText = "*The quick brown fox jumps over the lazy dog";
+            string inputText = "~~";
 
             var expectedResult = new TextFormatInfo
             {
-                Text = "*The quick brown fox jumps over the lazy dog",
+                Text = "~~",
                 Bolds = new Tuple<int, int>[] { },
                 Italics = new Tuple<int, int>[] { },
                 StrikeThroughs = new Tuple<int, int>[] { },
@@ -53,13 +53,13 @@ namespace WhatsappTextFormatter.Business.Tests.NUnit.GetTextFormatInfoFeature
         }
 
         [Test]
-        public void EndingWithAnAsterisk()
+        public void ThreeStrikeThroughMarkers()
         {
-            string inputText = "The quick brown fox jumps over the lazy dog*";
+            string inputText = "~~~";
 
             var expectedResult = new TextFormatInfo
             {
-                Text = "The quick brown fox jumps over the lazy dog*",
+                Text = "~~~",
                 Bolds = new Tuple<int, int>[] { },
                 Italics = new Tuple<int, int>[] { },
                 StrikeThroughs = new Tuple<int, int>[] { },
@@ -70,13 +70,13 @@ namespace WhatsappTextFormatter.Business.Tests.NUnit.GetTextFormatInfoFeature
         }
 
         [Test]
-        public void BeginningWithTwoAsterisks()
+        public void FourStrikeThroughMarkers()
         {
-            string inputText = "**The quick brown fox jumps over the lazy dog";
+            string inputText = "~~~~";
 
             var expectedResult = new TextFormatInfo
             {
-                Text = "**The quick brown fox jumps over the lazy dog",
+                Text = "~~~~",
                 Bolds = new Tuple<int, int>[] { },
                 Italics = new Tuple<int, int>[] { },
                 StrikeThroughs = new Tuple<int, int>[] { },
@@ -87,13 +87,13 @@ namespace WhatsappTextFormatter.Business.Tests.NUnit.GetTextFormatInfoFeature
         }
 
         [Test]
-        public void EndingWithTwoAsterisks()
+        public void FiveStrikeThroughMarkers()
         {
-            string inputText = "The quick brown fox jumps over the lazy dog**";
+            string inputText = "~~~~~";
 
             var expectedResult = new TextFormatInfo
             {
-                Text = "The quick brown fox jumps over the lazy dog**",
+                Text = "~~~~~",
                 Bolds = new Tuple<int, int>[] { },
                 Italics = new Tuple<int, int>[] { },
                 StrikeThroughs = new Tuple<int, int>[] { },
@@ -104,13 +104,30 @@ namespace WhatsappTextFormatter.Business.Tests.NUnit.GetTextFormatInfoFeature
         }
 
         [Test]
-        public void AsteriskBetweenWhiteSpaces()
+        public void SixStrikeThroughMarkers()
         {
-            string inputText = "The quick * brown fox* jumps over the lazy dog";
+            string inputText = "~~~~~~";
 
             var expectedResult = new TextFormatInfo
             {
-                Text = "The quick * brown fox* jumps over the lazy dog",
+                Text = "~~~~~~",
+                Bolds = new Tuple<int, int>[] { },
+                Italics = new Tuple<int, int>[] { },
+                StrikeThroughs = new Tuple<int, int>[] { },
+            };
+
+            _steps.WhenIInputTheText(inputText);
+            _steps.ThenTheResultShouldBe(expectedResult);
+        }
+
+        [Test]
+        public void LotsOfStrikeThroughMarker()
+        {
+            string inputText = "~ ~~ ~~~ ~ ~~ ~~~~ ~ ~~ ~~~~~ ~ ~ ~~";
+
+            var expectedResult = new TextFormatInfo
+            {
+                Text = "~ ~~ ~~~ ~ ~~ ~~~~ ~ ~~ ~~~~~ ~ ~ ~~",
                 Bolds = new Tuple<int, int>[] { },
                 Italics = new Tuple<int, int>[] { },
                 StrikeThroughs = new Tuple<int, int>[] { },

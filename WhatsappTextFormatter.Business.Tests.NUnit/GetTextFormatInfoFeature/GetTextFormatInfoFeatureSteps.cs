@@ -1,6 +1,6 @@
+using Ninject;
 using NUnit.Framework;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -13,7 +13,8 @@ namespace WhatsappTextFormatter.Business.Tests.NUnit.GetTextFormatInfoFeature
 
         public GetTextFormatInfoFeatureSteps()
         {
-            _textFormatter = new FullTextFormatter();
+            IKernel kernel = new StandardKernel(new DefaultBusinessModule());
+            _textFormatter = kernel.Get<FullTextFormatter>();
         }
 
         public void Setup()

@@ -1,13 +1,13 @@
 ﻿using NUnit.Framework;
 using System;
 
-namespace WhatsappTextFormatter.Business.Tests.NUnit.GetTextFormatInfoFeature
+namespace WhatsappTextFormatter.Business.Tests.NUnit.GetTextFormatInfoFeature.Scenarios.IsolatedTypes
 {
-    public class SomethingStrikeThroughScenario
+    public class SomethingItalicScenario
     {
         private readonly GetTextFormatInfoFeatureSteps _steps;
 
-        public SomethingStrikeThroughScenario()
+        public SomethingItalicScenario()
         {
             _steps = new GetTextFormatInfoFeatureSteps();
         }
@@ -19,16 +19,16 @@ namespace WhatsappTextFormatter.Business.Tests.NUnit.GetTextFormatInfoFeature
         }
 
         [Test]
-        public void SingleStrikeThroughWord()
+        public void SingleItalicWord()
         {
-            string inputText = "The quick brown ~fox~ jumps over the lazy dog";
+            string inputText = "The quick brown _fox_ jumps over the lazy dog";
 
             var expectedResult = new TextFormatInfo
             {
                 Text = "The quick brown fox jumps over the lazy dog",
                 Bolds = new Tuple<int, int>[] { },
-                Italics = new Tuple<int, int>[] { },
-                StrikeThroughs = new[] { Tuple.Create(16, 18) },
+                Italics = new[] { Tuple.Create(16, 18) },
+                StrikeThroughs = new Tuple<int, int>[] { },
             };
 
             _steps.WhenIInputTheText(inputText);
@@ -36,16 +36,16 @@ namespace WhatsappTextFormatter.Business.Tests.NUnit.GetTextFormatInfoFeature
         }
 
         [Test]
-        public void WholeStrikeThroughText()
+        public void WholeItalicText()
         {
-            string inputText = "~The quick brown fox jumps over the lazy dog~";
+            string inputText = "_The quick brown fox jumps over the lazy dog_";
 
             var expectedResult = new TextFormatInfo
             {
                 Text = "The quick brown fox jumps over the lazy dog",
                 Bolds = new Tuple<int, int>[] { },
-                Italics = new Tuple<int, int>[] { },
-                StrikeThroughs = new[] { Tuple.Create(0, 42) },
+                Italics = new[] { Tuple.Create(0, 42) },
+                StrikeThroughs = new Tuple<int, int>[] { },
             };
 
             _steps.WhenIInputTheText(inputText);
@@ -53,16 +53,16 @@ namespace WhatsappTextFormatter.Business.Tests.NUnit.GetTextFormatInfoFeature
         }
 
         [Test]
-        public void TwoIsolatedStrikeThroughWords()
+        public void TwoIsolatedItalicWords()
         {
-            string inputText = "The quick brown ~fox~ jumps over the lazy ~dog~";
+            string inputText = "The quick brown _fox_ jumps over the lazy _dog_";
 
             var expectedResult = new TextFormatInfo
             {
                 Text = "The quick brown fox jumps over the lazy dog",
                 Bolds = new Tuple<int, int>[] { },
-                Italics = new Tuple<int, int>[] { },
-                StrikeThroughs = new[] { Tuple.Create(16, 18), Tuple.Create(40, 42) },
+                Italics = new[] { Tuple.Create(16, 18), Tuple.Create(40, 42) },
+                StrikeThroughs = new Tuple<int, int>[] { },
             };
 
             _steps.WhenIInputTheText(inputText);
@@ -70,16 +70,16 @@ namespace WhatsappTextFormatter.Business.Tests.NUnit.GetTextFormatInfoFeature
         }
 
         [Test]
-        public void TildeInsideAStrikeThroughWord()
+        public void DashInsideAItalicWord()
         {
-            string inputText = "The quick ~bro~wn fox~ jumps over the lazy dog";
+            string inputText = "The quick _bro_wn fox_ jumps over the lazy dog";
 
             var expectedResult = new TextFormatInfo
             {
-                Text = "The quick bro~wn fox jumps over the lazy dog",
+                Text = "The quick bro_wn fox jumps over the lazy dog",
                 Bolds = new Tuple<int, int>[] { },
-                Italics = new Tuple<int, int>[] { },
-                StrikeThroughs = new[] { Tuple.Create(10, 19) },
+                Italics = new[] { Tuple.Create(10, 19) },
+                StrikeThroughs = new Tuple<int, int>[] { },
             };
 
             _steps.WhenIInputTheText(inputText);
@@ -87,16 +87,16 @@ namespace WhatsappTextFormatter.Business.Tests.NUnit.GetTextFormatInfoFeature
         }
 
         [Test]
-        public void NonStrikeThroughTildeAtTheEndOfAStrikeThroughWord()
+        public void NonItalicDashAtTheEndOfABoldWord()
         {
-            string inputText = "The quick ~brown fox~~ jumps over the lazy dog";
+            string inputText = "The quick _brown fox__ jumps over the lazy dog";
 
             var expectedResult = new TextFormatInfo
             {
-                Text = "The quick brown fox~ jumps over the lazy dog",
+                Text = "The quick brown fox_ jumps over the lazy dog",
                 Bolds = new Tuple<int, int>[] { },
-                Italics = new Tuple<int, int>[] { },
-                StrikeThroughs = new[] { Tuple.Create(10, 18) },
+                Italics = new[] { Tuple.Create(10, 18) },
+                StrikeThroughs = new Tuple<int, int>[] { },
             };
 
             _steps.WhenIInputTheText(inputText);
@@ -104,16 +104,16 @@ namespace WhatsappTextFormatter.Business.Tests.NUnit.GetTextFormatInfoFeature
         }
 
         [Test]
-        public void NonStrikeThroughTildeAtTheEndOfANonStrikeThroughWord()
+        public void NonItalicDashAtTheEndOfANonBoldWord()
         {
-            string inputText = "The quick ~brown fox~ jumps~ over the lazy dog";
+            string inputText = "The quick _brown fox_ jumps_ over the lazy dog";
 
             var expectedResult = new TextFormatInfo
             {
-                Text = "The quick brown fox jumps~ over the lazy dog",
+                Text = "The quick brown fox jumps_ over the lazy dog",
                 Bolds = new Tuple<int, int>[] { },
-                Italics = new Tuple<int, int>[] { },
-                StrikeThroughs = new[] { Tuple.Create(10, 18) },
+                Italics = new[] { Tuple.Create(10, 18) },
+                StrikeThroughs = new Tuple<int, int>[] { },
             };
 
             _steps.WhenIInputTheText(inputText);
@@ -121,16 +121,16 @@ namespace WhatsappTextFormatter.Business.Tests.NUnit.GetTextFormatInfoFeature
         }
 
         [Test]
-        public void StrikeThroughTildeAtTheBeginningOfAStrikeThroughWord()
+        public void ItalicDashAtTheBeginningOfABoldWord()
         {
-            string inputText = "The quick ~~brown fox~ jumps over the lazy dog";
+            string inputText = "The quick __brown fox_ jumps over the lazy dog";
 
             var expectedResult = new TextFormatInfo
             {
-                Text = "The quick ~brown fox jumps over the lazy dog",
+                Text = "The quick _brown fox jumps over the lazy dog",
                 Bolds = new Tuple<int, int>[] { },
-                Italics = new Tuple<int, int>[] { },
-                StrikeThroughs = new[] { Tuple.Create(10, 19) },
+                Italics = new[] { Tuple.Create(10, 19) },
+                StrikeThroughs = new Tuple<int, int>[] { },
             };
 
             _steps.WhenIInputTheText(inputText);
@@ -140,14 +140,14 @@ namespace WhatsappTextFormatter.Business.Tests.NUnit.GetTextFormatInfoFeature
         [Test]
         public void TheInconsistentCaseOfWhatsAppWeb()
         {
-            string inputText = "The quick ~brown fox jump~~s~ over the lazy dog";
+            string inputText = "The quick _brown fox jump__s_ over the lazy dog";
 
             var expectedResult = new TextFormatInfo
             {
-                Text = "The quick brown fox jump~s~ over the lazy dog",
+                Text = "The quick brown fox jump_s_ over the lazy dog",
                 Bolds = new Tuple<int, int>[] { },
-                Italics = new Tuple<int, int>[] { },
-                StrikeThroughs = new[] { Tuple.Create(10, 23) },
+                Italics = new[] { Tuple.Create(10, 23) },
+                StrikeThroughs = new Tuple<int, int>[] { },
             };
 
             _steps.WhenIInputTheText(inputText);

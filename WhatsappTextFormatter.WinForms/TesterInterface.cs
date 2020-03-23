@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Ninject;
 using System;
 using System.Drawing;
 using System.Windows.Forms;
@@ -8,13 +9,18 @@ namespace WhatsappTextFormatter.WinForms
 {
     public partial class TesterInterface : Form
     {
-        private readonly FullTextFormatter _formatter;
+        private readonly FullTextFormatter _textFormatter;
 
         public TesterInterface()
         {
             InitializeComponent();
+        }
 
-            _formatter = new FullTextFormatter();
+        [Inject]
+        public TesterInterface(FullTextFormatter textFormatter)
+            : this()
+        {
+            _textFormatter = textFormatter;
             btFormat.Click += BtFormat_Click;
 
             rtbUnformattedText.Focus();
@@ -22,7 +28,7 @@ namespace WhatsappTextFormatter.WinForms
 
         private void BtFormat_Click(object sender, EventArgs e)
         {
-            var info = _formatter.GetTextFormatInfo(rtbUnformattedText.Text);
+            var info = _textFormatter.GetTextFormatInfo(rtbUnformattedText.Text);
 
             rtbText.Text = info.Text;
             rtbFormatInfo.Text = JsonConvert.SerializeObject(info, Formatting.Indented);

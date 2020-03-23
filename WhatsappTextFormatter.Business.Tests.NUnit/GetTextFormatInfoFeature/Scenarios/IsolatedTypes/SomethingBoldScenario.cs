@@ -1,13 +1,13 @@
 ﻿using NUnit.Framework;
 using System;
 
-namespace WhatsappTextFormatter.Business.Tests.NUnit.GetTextFormatInfoFeature
+namespace WhatsappTextFormatter.Business.Tests.NUnit.GetTextFormatInfoFeature.Scenarios.IsolatedTypes
 {
-    public class SomethingItalicScenario
+    public class SomethingBoldScenario
     {
-        private readonly GetTextFormatInfoFeatureSteps _steps;
+        private GetTextFormatInfoFeatureSteps _steps;
 
-        public SomethingItalicScenario()
+        public SomethingBoldScenario()
         {
             _steps = new GetTextFormatInfoFeatureSteps();
         }
@@ -19,15 +19,15 @@ namespace WhatsappTextFormatter.Business.Tests.NUnit.GetTextFormatInfoFeature
         }
 
         [Test]
-        public void SingleItalicWord()
+        public void SingleBoldWord()
         {
-            string inputText = "The quick brown _fox_ jumps over the lazy dog";
+            string inputText = "The quick brown *fox* jumps over the lazy dog";
 
             var expectedResult = new TextFormatInfo
             {
                 Text = "The quick brown fox jumps over the lazy dog",
-                Bolds = new Tuple<int, int>[] { },
-                Italics = new[] { Tuple.Create(16, 18) },
+                Bolds = new[] { Tuple.Create(16, 18) },
+                Italics = new Tuple<int, int>[] { },
                 StrikeThroughs = new Tuple<int, int>[] { },
             };
 
@@ -36,15 +36,15 @@ namespace WhatsappTextFormatter.Business.Tests.NUnit.GetTextFormatInfoFeature
         }
 
         [Test]
-        public void WholeItalicText()
+        public void WholeBoldText()
         {
-            string inputText = "_The quick brown fox jumps over the lazy dog_";
+            string inputText = "*The quick brown fox jumps over the lazy dog*";
 
             var expectedResult = new TextFormatInfo
             {
                 Text = "The quick brown fox jumps over the lazy dog",
-                Bolds = new Tuple<int, int>[] { },
-                Italics = new[] { Tuple.Create(0, 42) },
+                Bolds = new[] { Tuple.Create(0, 42) },
+                Italics = new Tuple<int, int>[] { },
                 StrikeThroughs = new Tuple<int, int>[] { },
             };
 
@@ -53,15 +53,15 @@ namespace WhatsappTextFormatter.Business.Tests.NUnit.GetTextFormatInfoFeature
         }
 
         [Test]
-        public void TwoIsolatedItalicWords()
+        public void TwoIsolatedBoldWords()
         {
-            string inputText = "The quick brown _fox_ jumps over the lazy _dog_";
+            string inputText = "The quick brown *fox* jumps over the lazy *dog*";
 
             var expectedResult = new TextFormatInfo
             {
                 Text = "The quick brown fox jumps over the lazy dog",
-                Bolds = new Tuple<int, int>[] { },
-                Italics = new[] { Tuple.Create(16, 18), Tuple.Create(40, 42) },
+                Bolds = new[] { Tuple.Create(16, 18), Tuple.Create(40, 42) },
+                Italics = new Tuple<int, int>[] { },
                 StrikeThroughs = new Tuple<int, int>[] { },
             };
 
@@ -70,15 +70,15 @@ namespace WhatsappTextFormatter.Business.Tests.NUnit.GetTextFormatInfoFeature
         }
 
         [Test]
-        public void DashInsideAItalicWord()
+        public void AsteriskInsideABoldWord()
         {
-            string inputText = "The quick _bro_wn fox_ jumps over the lazy dog";
+            string inputText = "The quick *bro*wn fox* jumps over the lazy dog";
 
             var expectedResult = new TextFormatInfo
             {
-                Text = "The quick bro_wn fox jumps over the lazy dog",
-                Bolds = new Tuple<int, int>[] { },
-                Italics = new[] { Tuple.Create(10, 19) },
+                Text = "The quick bro*wn fox jumps over the lazy dog",
+                Bolds = new[] { Tuple.Create(10, 19) },
+                Italics = new Tuple<int, int>[] { },
                 StrikeThroughs = new Tuple<int, int>[] { },
             };
 
@@ -87,15 +87,15 @@ namespace WhatsappTextFormatter.Business.Tests.NUnit.GetTextFormatInfoFeature
         }
 
         [Test]
-        public void NonItalicDashAtTheEndOfABoldWord()
+        public void NonBoldAsteriskAtTheEndOfABoldWord()
         {
-            string inputText = "The quick _brown fox__ jumps over the lazy dog";
+            string inputText = "The quick *brown fox** jumps over the lazy dog";
 
             var expectedResult = new TextFormatInfo
             {
-                Text = "The quick brown fox_ jumps over the lazy dog",
-                Bolds = new Tuple<int, int>[] { },
-                Italics = new[] { Tuple.Create(10, 18) },
+                Text = "The quick brown fox* jumps over the lazy dog",
+                Bolds = new[] { Tuple.Create(10, 18) },
+                Italics = new Tuple<int, int>[] { },
                 StrikeThroughs = new Tuple<int, int>[] { },
             };
 
@@ -104,15 +104,15 @@ namespace WhatsappTextFormatter.Business.Tests.NUnit.GetTextFormatInfoFeature
         }
 
         [Test]
-        public void NonItalicDashAtTheEndOfANonBoldWord()
+        public void NonBoldAsteriskAtTheEndOfANonBoldWord()
         {
-            string inputText = "The quick _brown fox_ jumps_ over the lazy dog";
+            string inputText = "The quick *brown fox* jumps* over the lazy dog";
 
             var expectedResult = new TextFormatInfo
             {
-                Text = "The quick brown fox jumps_ over the lazy dog",
-                Bolds = new Tuple<int, int>[] { },
-                Italics = new[] { Tuple.Create(10, 18) },
+                Text = "The quick brown fox jumps* over the lazy dog",
+                Bolds = new[] { Tuple.Create(10, 18) },
+                Italics = new Tuple<int, int>[] { },
                 StrikeThroughs = new Tuple<int, int>[] { },
             };
 
@@ -121,15 +121,15 @@ namespace WhatsappTextFormatter.Business.Tests.NUnit.GetTextFormatInfoFeature
         }
 
         [Test]
-        public void ItalicDashAtTheBeginningOfABoldWord()
+        public void BoldAsteriskAtTheBeginningOfABoldWord()
         {
-            string inputText = "The quick __brown fox_ jumps over the lazy dog";
+            string inputText = "The quick **brown fox* jumps over the lazy dog";
 
             var expectedResult = new TextFormatInfo
             {
-                Text = "The quick _brown fox jumps over the lazy dog",
-                Bolds = new Tuple<int, int>[] { },
-                Italics = new[] { Tuple.Create(10, 19) },
+                Text = "The quick *brown fox jumps over the lazy dog",
+                Bolds = new[] { Tuple.Create(10, 19) },
+                Italics = new Tuple<int, int>[] { },
                 StrikeThroughs = new Tuple<int, int>[] { },
             };
 
@@ -140,13 +140,13 @@ namespace WhatsappTextFormatter.Business.Tests.NUnit.GetTextFormatInfoFeature
         [Test]
         public void TheInconsistentCaseOfWhatsAppWeb()
         {
-            string inputText = "The quick _brown fox jump__s_ over the lazy dog";
+            string inputText = "The quick *brown fox jump**s* over the lazy dog";
 
             var expectedResult = new TextFormatInfo
             {
-                Text = "The quick brown fox jump_s_ over the lazy dog",
-                Bolds = new Tuple<int, int>[] { },
-                Italics = new[] { Tuple.Create(10, 23) },
+                Text = "The quick brown fox jump*s* over the lazy dog",
+                Bolds = new[] { Tuple.Create(10, 23) },
+                Italics = new Tuple<int, int>[] { },
                 StrikeThroughs = new Tuple<int, int>[] { },
             };
 

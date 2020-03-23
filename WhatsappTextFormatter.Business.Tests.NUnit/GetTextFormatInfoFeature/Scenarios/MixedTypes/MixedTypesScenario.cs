@@ -1,7 +1,7 @@
 ﻿using NUnit.Framework;
 using System;
 
-namespace WhatsappTextFormatter.Business.Tests.NUnit.GetTextFormatInfoFeature
+namespace WhatsappTextFormatter.Business.Tests.NUnit.GetTextFormatInfoFeature.Scenarios.MixedTypes
 {
     public class MixedTypesScenario
     {
@@ -129,7 +129,7 @@ namespace WhatsappTextFormatter.Business.Tests.NUnit.GetTextFormatInfoFeature
             {
                 Text = "The quick _~brown~ *fox_ ~jumps*~ over ~*the~ lazy ~*dog~",
                 Bolds = new[] { Tuple.Create(4, 8), Tuple.Create(10, 16), Tuple.Create(23, 25), Tuple.Create(44, 55) },
-                Italics = new[] { Tuple.Create(4, 8), Tuple.Create(26, 32), Tuple.Create(39, 43), Tuple.Create(51, 55) },
+                Italics = new[] { Tuple.Create(4, 8), Tuple.Create(17, 19),  Tuple.Create(26, 32), Tuple.Create(39, 43), Tuple.Create(51, 55) },
                 StrikeThroughs = new[] { Tuple.Create(4, 8), Tuple.Create(20, 22) },
             };
 

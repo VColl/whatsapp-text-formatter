@@ -1,13 +1,13 @@
 ﻿using NUnit.Framework;
 using System;
 
-namespace WhatsappTextFormatter.Business.Tests.NUnit.GetTextFormatInfoFeature
+namespace WhatsappTextFormatter.Business.Tests.NUnit.GetTextFormatInfoFeature.Scenarios.JustMarkers
 {
-    public class CancelingScenario
+    public class JustItalicMarkersScenario
     {
-        private readonly GetTextFormatInfoFeatureSteps _steps;
+        private GetTextFormatInfoFeatureSteps _steps;
 
-        public CancelingScenario()
+        public JustItalicMarkersScenario()
         {
             _steps = new GetTextFormatInfoFeatureSteps();
         }
@@ -19,14 +19,14 @@ namespace WhatsappTextFormatter.Business.Tests.NUnit.GetTextFormatInfoFeature
         }
 
         [Test]
-        public void BoldCancelingItalic()
+        public void SingleItalicMarker()
         {
-            string inputText = "The *quick _brown* fox_ *_jumps* over_ the lazy dog";
+            string inputText = "_";
 
             var expectedResult = new TextFormatInfo
             {
-                Text = "The quick _brown fox_ _jumps over_ the lazy dog",
-                Bolds = new[] { Tuple.Create(4, 15), Tuple.Create(22, 27) },
+                Text = "_",
+                Bolds = new Tuple<int, int>[] { },
                 Italics = new Tuple<int, int>[] { },
                 StrikeThroughs = new Tuple<int, int>[] { },
             };
@@ -36,14 +36,14 @@ namespace WhatsappTextFormatter.Business.Tests.NUnit.GetTextFormatInfoFeature
         }
 
         [Test]
-        public void BoldCancelingStrikeThrough()
+        public void TwoItalicMarkers()
         {
-            string inputText = "The *quick ~brown* fox~ *~jumps* over~ the lazy dog";
+            string inputText = "__";
 
             var expectedResult = new TextFormatInfo
             {
-                Text = "The quick ~brown fox~ ~jumps over~ the lazy dog",
-                Bolds = new[] { Tuple.Create(4, 15), Tuple.Create(22, 27) },
+                Text = "__",
+                Bolds = new Tuple<int, int>[] { },
                 Italics = new Tuple<int, int>[] { },
                 StrikeThroughs = new Tuple<int, int>[] { },
             };
@@ -53,15 +53,15 @@ namespace WhatsappTextFormatter.Business.Tests.NUnit.GetTextFormatInfoFeature
         }
 
         [Test]
-        public void ItalicCancelingBold()
+        public void ThreeItalicMarkers()
         {
-            string inputText = "The _quick *brown_ fox* _*jumps_ over* the lazy dog";
+            string inputText = "___";
 
             var expectedResult = new TextFormatInfo
             {
-                Text = "The quick *brown fox* *jumps over* the lazy dog",
+                Text = "___",
                 Bolds = new Tuple<int, int>[] { },
-                Italics = new[] { Tuple.Create(4, 15), Tuple.Create(22, 27) },
+                Italics = new Tuple<int, int>[] { },
                 StrikeThroughs = new Tuple<int, int>[] { },
             };
 
@@ -70,15 +70,15 @@ namespace WhatsappTextFormatter.Business.Tests.NUnit.GetTextFormatInfoFeature
         }
 
         [Test]
-        public void ItalicCancelingStrikeThrough()
+        public void FourItalicMarkers()
         {
-            string inputText = "The _quick ~brown_ fox~ _~jumps_ over~ the lazy dog";
+            string inputText = "____";
 
             var expectedResult = new TextFormatInfo
             {
-                Text = "The quick ~brown fox~ ~jumps over~ the lazy dog",
+                Text = "____",
                 Bolds = new Tuple<int, int>[] { },
-                Italics = new[] { Tuple.Create(4, 15), Tuple.Create(22, 27) },
+                Italics = new Tuple<int, int>[] { },
                 StrikeThroughs = new Tuple<int, int>[] { },
             };
 
@@ -87,16 +87,16 @@ namespace WhatsappTextFormatter.Business.Tests.NUnit.GetTextFormatInfoFeature
         }
 
         [Test]
-        public void StrikeThrougtCancelingBold()
+        public void FiveItalicMarkers()
         {
-            string inputText = "The ~quick *brown~ fox* ~*jumps~ over* the lazy dog";
+            string inputText = "_____";
 
             var expectedResult = new TextFormatInfo
             {
-                Text = "The quick *brown fox* *jumps over* the lazy dog",
+                Text = "_____",
                 Bolds = new Tuple<int, int>[] { },
                 Italics = new Tuple<int, int>[] { },
-                StrikeThroughs = new[] { Tuple.Create(4, 15), Tuple.Create(22, 27) },
+                StrikeThroughs = new Tuple<int, int>[] { },
             };
 
             _steps.WhenIInputTheText(inputText);
@@ -104,16 +104,33 @@ namespace WhatsappTextFormatter.Business.Tests.NUnit.GetTextFormatInfoFeature
         }
 
         [Test]
-        public void StrikeThrougtCancelingItalic()
+        public void SixItalicMarkers()
         {
-            string inputText = "The ~quick _brown~ fox_ ~_jumps~ over_ the lazy dog";
+            string inputText = "______";
 
             var expectedResult = new TextFormatInfo
             {
-                Text = "The quick _brown fox_ _jumps over_ the lazy dog",
+                Text = "______",
                 Bolds = new Tuple<int, int>[] { },
                 Italics = new Tuple<int, int>[] { },
-                StrikeThroughs = new[] { Tuple.Create(4, 15), Tuple.Create(22, 27) },
+                StrikeThroughs = new Tuple<int, int>[] { },
+            };
+
+            _steps.WhenIInputTheText(inputText);
+            _steps.ThenTheResultShouldBe(expectedResult);
+        }
+
+        [Test]
+        public void LotsOfItalicMarker()
+        {
+            string inputText = "_ __ ___ _ __ ____ _ __ _____ _ _ __";
+
+            var expectedResult = new TextFormatInfo
+            {
+                Text = "_ __ ___ _ __ ____ _ __ _____ _ _ __",
+                Bolds = new Tuple<int, int>[] { },
+                Italics = new Tuple<int, int>[] { },
+                StrikeThroughs = new Tuple<int, int>[] { },
             };
 
             _steps.WhenIInputTheText(inputText);

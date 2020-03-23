@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Ninject;
+using System;
 using System.Windows.Forms;
+using WhatsappTextFormatter.Business;
 
 namespace WhatsappTextFormatter.WinForms
 {
@@ -16,7 +15,11 @@ namespace WhatsappTextFormatter.WinForms
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new TesterInterface());
+
+            IKernel kernel = new StandardKernel(new DefaultBusinessModule());
+            var mainView = kernel.Get<TesterInterface>();
+
+            Application.Run(mainView);
         }
     }
 }
