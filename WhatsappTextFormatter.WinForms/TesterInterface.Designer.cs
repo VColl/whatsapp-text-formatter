@@ -43,7 +43,7 @@
             // 
             this.tableLayoutPanel1.ColumnCount = 5;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 120F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 160F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 8F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
@@ -58,50 +58,53 @@
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 9;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 26F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 21F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 48F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 8F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 26F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 48F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 8F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 8F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 31F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(742, 282);
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 39F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 21F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1100, 449);
             this.tableLayoutPanel1.TabIndex = 1;
             // 
             // lbUnformattedText
             // 
             this.lbUnformattedText.AutoSize = true;
             this.lbUnformattedText.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lbUnformattedText.Location = new System.Drawing.Point(23, 23);
+            this.lbUnformattedText.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbUnformattedText.Location = new System.Drawing.Point(23, 24);
             this.lbUnformattedText.Margin = new System.Windows.Forms.Padding(3);
             this.lbUnformattedText.Name = "lbUnformattedText";
-            this.lbUnformattedText.Size = new System.Drawing.Size(114, 20);
+            this.lbUnformattedText.Size = new System.Drawing.Size(154, 42);
             this.lbUnformattedText.TabIndex = 1;
             this.lbUnformattedText.Text = "Unformatted Text";
-            this.lbUnformattedText.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            this.lbUnformattedText.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // lbText
             // 
             this.lbText.AutoSize = true;
             this.lbText.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lbText.Location = new System.Drawing.Point(23, 57);
+            this.lbText.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbText.Location = new System.Drawing.Point(23, 80);
             this.lbText.Margin = new System.Windows.Forms.Padding(3);
             this.lbText.Name = "lbText";
-            this.lbText.Size = new System.Drawing.Size(114, 20);
+            this.lbText.Size = new System.Drawing.Size(154, 42);
             this.lbText.TabIndex = 1;
             this.lbText.Text = "Text";
-            this.lbText.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            this.lbText.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // lbFormatInfo
             // 
             this.lbFormatInfo.AutoSize = true;
             this.lbFormatInfo.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lbFormatInfo.Location = new System.Drawing.Point(23, 91);
+            this.lbFormatInfo.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbFormatInfo.Location = new System.Drawing.Point(23, 136);
             this.lbFormatInfo.Margin = new System.Windows.Forms.Padding(3);
             this.lbFormatInfo.Name = "lbFormatInfo";
-            this.lbFormatInfo.Size = new System.Drawing.Size(114, 129);
+            this.lbFormatInfo.Size = new System.Drawing.Size(154, 242);
             this.lbFormatInfo.TabIndex = 1;
             this.lbFormatInfo.Text = "Format Info";
             this.lbFormatInfo.TextAlign = System.Drawing.ContentAlignment.TopRight;
@@ -110,9 +113,10 @@
             // 
             this.btFormat.AutoSize = true;
             this.btFormat.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btFormat.Location = new System.Drawing.Point(151, 234);
+            this.btFormat.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btFormat.Location = new System.Drawing.Point(191, 392);
             this.btFormat.Name = "btFormat";
-            this.btFormat.Size = new System.Drawing.Size(568, 25);
+            this.btFormat.Size = new System.Drawing.Size(886, 33);
             this.btFormat.TabIndex = 3;
             this.btFormat.Text = "Format";
             this.btFormat.UseVisualStyleBackColor = true;
@@ -120,40 +124,44 @@
             // rtbText
             // 
             this.rtbText.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.rtbText.Location = new System.Drawing.Point(151, 57);
+            this.rtbText.Font = new System.Drawing.Font("Consolas", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.rtbText.Location = new System.Drawing.Point(191, 80);
             this.rtbText.Name = "rtbText";
             this.rtbText.ReadOnly = true;
-            this.rtbText.Size = new System.Drawing.Size(568, 20);
+            this.rtbText.Size = new System.Drawing.Size(886, 42);
             this.rtbText.TabIndex = 1;
             this.rtbText.Text = "";
             // 
             // rtbUnformattedText
             // 
             this.rtbUnformattedText.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.rtbUnformattedText.Location = new System.Drawing.Point(151, 23);
+            this.rtbUnformattedText.Font = new System.Drawing.Font("Consolas", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.rtbUnformattedText.Location = new System.Drawing.Point(191, 24);
             this.rtbUnformattedText.Name = "rtbUnformattedText";
-            this.rtbUnformattedText.Size = new System.Drawing.Size(568, 20);
+            this.rtbUnformattedText.Size = new System.Drawing.Size(886, 42);
             this.rtbUnformattedText.TabIndex = 0;
             this.rtbUnformattedText.Text = "";
             // 
             // rtbFormatInfo
             // 
             this.rtbFormatInfo.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.rtbFormatInfo.Location = new System.Drawing.Point(151, 91);
+            this.rtbFormatInfo.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.rtbFormatInfo.Location = new System.Drawing.Point(191, 136);
             this.rtbFormatInfo.Name = "rtbFormatInfo";
             this.rtbFormatInfo.ReadOnly = true;
-            this.rtbFormatInfo.Size = new System.Drawing.Size(568, 129);
+            this.rtbFormatInfo.Size = new System.Drawing.Size(886, 242);
             this.rtbFormatInfo.TabIndex = 2;
             this.rtbFormatInfo.Text = "";
             // 
             // TesterInterface
             // 
             this.AcceptButton = this.btFormat;
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 14F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(742, 282);
+            this.ClientSize = new System.Drawing.Size(1100, 449);
             this.Controls.Add(this.tableLayoutPanel1);
-            this.MinimumSize = new System.Drawing.Size(400, 283);
+            this.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.MinimumSize = new System.Drawing.Size(400, 302);
             this.Name = "TesterInterface";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Whatsapp Text Formatter";
