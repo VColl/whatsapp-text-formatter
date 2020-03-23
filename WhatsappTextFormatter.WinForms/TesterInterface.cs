@@ -1,9 +1,9 @@
 ﻿using Newtonsoft.Json;
+using Ninject;
 using System;
 using System.Drawing;
 using System.Windows.Forms;
 using WhatsappTextFormatter.Business;
-using WhatsappTextFormatter.Business.SimpleFormatters;
 
 namespace WhatsappTextFormatter.WinForms
 {
@@ -14,10 +14,13 @@ namespace WhatsappTextFormatter.WinForms
         public TesterInterface()
         {
             InitializeComponent();
+        }
 
-            var factory = new TextFormatterFactory(new ITextFormatter[] { new BoldFormatter(), new ItalicFormatter(), new StrikeThroughFormatter() });
-
-            _textFormatter = new FullTextFormatter(factory);
+        [Inject]
+        public TesterInterface(FullTextFormatter textFormatter)
+            : this()
+        {
+            _textFormatter = textFormatter;
             btFormat.Click += BtFormat_Click;
 
             rtbUnformattedText.Focus();
