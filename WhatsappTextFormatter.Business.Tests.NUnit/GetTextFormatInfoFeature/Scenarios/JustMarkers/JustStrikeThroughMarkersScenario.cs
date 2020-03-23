@@ -1,13 +1,13 @@
 ﻿using NUnit.Framework;
 using System;
 
-namespace WhatsappTextFormatter.Business.Tests.NUnit.GetTextFormatInfoFeature
+namespace WhatsappTextFormatter.Business.Tests.NUnit.GetTextFormatInfoFeature.Scenarios.JustMarkers
 {
-    public class SomethingBoldScenario
+    public class JustStrikeThroughMarkersScenario
     {
         private GetTextFormatInfoFeatureSteps _steps;
 
-        public SomethingBoldScenario()
+        public JustStrikeThroughMarkersScenario()
         {
             _steps = new GetTextFormatInfoFeatureSteps();
         }
@@ -19,14 +19,14 @@ namespace WhatsappTextFormatter.Business.Tests.NUnit.GetTextFormatInfoFeature
         }
 
         [Test]
-        public void SingleBoldWord()
+        public void SingleStrikeThroughMarker()
         {
-            string inputText = "The quick brown *fox* jumps over the lazy dog";
+            string inputText = "~";
 
             var expectedResult = new TextFormatInfo
             {
-                Text = "The quick brown fox jumps over the lazy dog",
-                Bolds = new[] { Tuple.Create(16, 18) },
+                Text = "~",
+                Bolds = new Tuple<int, int>[] { },
                 Italics = new Tuple<int, int>[] { },
                 StrikeThroughs = new Tuple<int, int>[] { },
             };
@@ -36,14 +36,14 @@ namespace WhatsappTextFormatter.Business.Tests.NUnit.GetTextFormatInfoFeature
         }
 
         [Test]
-        public void WholeBoldText()
+        public void TwoStrikeThroughMarkers()
         {
-            string inputText = "*The quick brown fox jumps over the lazy dog*";
+            string inputText = "~~";
 
             var expectedResult = new TextFormatInfo
             {
-                Text = "The quick brown fox jumps over the lazy dog",
-                Bolds = new[] { Tuple.Create(0, 42) },
+                Text = "~~",
+                Bolds = new Tuple<int, int>[] { },
                 Italics = new Tuple<int, int>[] { },
                 StrikeThroughs = new Tuple<int, int>[] { },
             };
@@ -53,14 +53,14 @@ namespace WhatsappTextFormatter.Business.Tests.NUnit.GetTextFormatInfoFeature
         }
 
         [Test]
-        public void TwoIsolatedBoldWords()
+        public void ThreeStrikeThroughMarkers()
         {
-            string inputText = "The quick brown *fox* jumps over the lazy *dog*";
+            string inputText = "~~~";
 
             var expectedResult = new TextFormatInfo
             {
-                Text = "The quick brown fox jumps over the lazy dog",
-                Bolds = new[] { Tuple.Create(16, 18), Tuple.Create(40, 42) },
+                Text = "~~~",
+                Bolds = new Tuple<int, int>[] { },
                 Italics = new Tuple<int, int>[] { },
                 StrikeThroughs = new Tuple<int, int>[] { },
             };
@@ -70,14 +70,14 @@ namespace WhatsappTextFormatter.Business.Tests.NUnit.GetTextFormatInfoFeature
         }
 
         [Test]
-        public void AsteriskInsideABoldWord()
+        public void FourStrikeThroughMarkers()
         {
-            string inputText = "The quick *bro*wn fox* jumps over the lazy dog";
+            string inputText = "~~~~";
 
             var expectedResult = new TextFormatInfo
             {
-                Text = "The quick bro*wn fox jumps over the lazy dog",
-                Bolds = new[] { Tuple.Create(10, 19) },
+                Text = "~~~~",
+                Bolds = new Tuple<int, int>[] { },
                 Italics = new Tuple<int, int>[] { },
                 StrikeThroughs = new Tuple<int, int>[] { },
             };
@@ -87,14 +87,14 @@ namespace WhatsappTextFormatter.Business.Tests.NUnit.GetTextFormatInfoFeature
         }
 
         [Test]
-        public void NonBoldAsteriskAtTheEndOfABoldWord()
+        public void FiveStrikeThroughMarkers()
         {
-            string inputText = "The quick *brown fox** jumps over the lazy dog";
+            string inputText = "~~~~~";
 
             var expectedResult = new TextFormatInfo
             {
-                Text = "The quick brown fox* jumps over the lazy dog",
-                Bolds = new[] { Tuple.Create(10, 18) },
+                Text = "~~~~~",
+                Bolds = new Tuple<int, int>[] { },
                 Italics = new Tuple<int, int>[] { },
                 StrikeThroughs = new Tuple<int, int>[] { },
             };
@@ -104,14 +104,14 @@ namespace WhatsappTextFormatter.Business.Tests.NUnit.GetTextFormatInfoFeature
         }
 
         [Test]
-        public void NonBoldAsteriskAtTheEndOfANonBoldWord()
+        public void SixStrikeThroughMarkers()
         {
-            string inputText = "The quick *brown fox* jumps* over the lazy dog";
+            string inputText = "~~~~~~";
 
             var expectedResult = new TextFormatInfo
             {
-                Text = "The quick brown fox jumps* over the lazy dog",
-                Bolds = new[] { Tuple.Create(10, 18) },
+                Text = "~~~~~~",
+                Bolds = new Tuple<int, int>[] { },
                 Italics = new Tuple<int, int>[] { },
                 StrikeThroughs = new Tuple<int, int>[] { },
             };
@@ -121,31 +121,14 @@ namespace WhatsappTextFormatter.Business.Tests.NUnit.GetTextFormatInfoFeature
         }
 
         [Test]
-        public void BoldAsteriskAtTheBeginningOfABoldWord()
+        public void LotsOfStrikeThroughMarker()
         {
-            string inputText = "The quick **brown fox* jumps over the lazy dog";
+            string inputText = "~ ~~ ~~~ ~ ~~ ~~~~ ~ ~~ ~~~~~ ~ ~ ~~";
 
             var expectedResult = new TextFormatInfo
             {
-                Text = "The quick *brown fox jumps over the lazy dog",
-                Bolds = new[] { Tuple.Create(10, 19) },
-                Italics = new Tuple<int, int>[] { },
-                StrikeThroughs = new Tuple<int, int>[] { },
-            };
-
-            _steps.WhenIInputTheText(inputText);
-            _steps.ThenTheResultShouldBe(expectedResult);
-        }
-
-        [Test]
-        public void TheInconsistentCaseOfWhatsAppWeb()
-        {
-            string inputText = "The quick *brown fox jump**s* over the lazy dog";
-
-            var expectedResult = new TextFormatInfo
-            {
-                Text = "The quick brown fox jump*s* over the lazy dog",
-                Bolds = new[] { Tuple.Create(10, 23) },
+                Text = "~ ~~ ~~~ ~ ~~ ~~~~ ~ ~~ ~~~~~ ~ ~ ~~",
+                Bolds = new Tuple<int, int>[] { },
                 Italics = new Tuple<int, int>[] { },
                 StrikeThroughs = new Tuple<int, int>[] { },
             };

@@ -1,13 +1,13 @@
 ﻿using NUnit.Framework;
 using System;
 
-namespace WhatsappTextFormatter.Business.Tests.NUnit.GetTextFormatInfoFeature
+namespace WhatsappTextFormatter.Business.Tests.NUnit.GetTextFormatInfoFeature.Scenarios.JustMarkers
 {
-    public class JustItalicMarkersScenario
+    public class JustBoldMarkersScenario
     {
         private GetTextFormatInfoFeatureSteps _steps;
 
-        public JustItalicMarkersScenario()
+        public JustBoldMarkersScenario()
         {
             _steps = new GetTextFormatInfoFeatureSteps();
         }
@@ -19,13 +19,13 @@ namespace WhatsappTextFormatter.Business.Tests.NUnit.GetTextFormatInfoFeature
         }
 
         [Test]
-        public void SingleItalicMarker()
+        public void SingleBoldMarker()
         {
-            string inputText = "_";
+            string inputText = "*";
 
             var expectedResult = new TextFormatInfo
             {
-                Text = "_",
+                Text = "*",
                 Bolds = new Tuple<int, int>[] { },
                 Italics = new Tuple<int, int>[] { },
                 StrikeThroughs = new Tuple<int, int>[] { },
@@ -36,13 +36,13 @@ namespace WhatsappTextFormatter.Business.Tests.NUnit.GetTextFormatInfoFeature
         }
 
         [Test]
-        public void TwoItalicMarkers()
+        public void TwoBoldMarkers()
         {
-            string inputText = "__";
+            string inputText = "**";
 
             var expectedResult = new TextFormatInfo
             {
-                Text = "__",
+                Text = "**",
                 Bolds = new Tuple<int, int>[] { },
                 Italics = new Tuple<int, int>[] { },
                 StrikeThroughs = new Tuple<int, int>[] { },
@@ -53,13 +53,13 @@ namespace WhatsappTextFormatter.Business.Tests.NUnit.GetTextFormatInfoFeature
         }
 
         [Test]
-        public void ThreeItalicMarkers()
+        public void ThreeBoldMarkers()
         {
-            string inputText = "___";
+            string inputText = "***";
 
             var expectedResult = new TextFormatInfo
             {
-                Text = "___",
+                Text = "***",
                 Bolds = new Tuple<int, int>[] { },
                 Italics = new Tuple<int, int>[] { },
                 StrikeThroughs = new Tuple<int, int>[] { },
@@ -70,13 +70,13 @@ namespace WhatsappTextFormatter.Business.Tests.NUnit.GetTextFormatInfoFeature
         }
 
         [Test]
-        public void FourItalicMarkers()
+        public void FourBoldMarkers()
         {
-            string inputText = "____";
+            string inputText = "****";
 
             var expectedResult = new TextFormatInfo
             {
-                Text = "____",
+                Text = "****",
                 Bolds = new Tuple<int, int>[] { },
                 Italics = new Tuple<int, int>[] { },
                 StrikeThroughs = new Tuple<int, int>[] { },
@@ -87,13 +87,13 @@ namespace WhatsappTextFormatter.Business.Tests.NUnit.GetTextFormatInfoFeature
         }
 
         [Test]
-        public void FiveItalicMarkers()
+        public void FiveBoldMarkers()
         {
-            string inputText = "_____";
+            string inputText = "*****";
 
             var expectedResult = new TextFormatInfo
             {
-                Text = "_____",
+                Text = "*****",
                 Bolds = new Tuple<int, int>[] { },
                 Italics = new Tuple<int, int>[] { },
                 StrikeThroughs = new Tuple<int, int>[] { },
@@ -104,13 +104,13 @@ namespace WhatsappTextFormatter.Business.Tests.NUnit.GetTextFormatInfoFeature
         }
 
         [Test]
-        public void SixItalicMarkers()
+        public void SixBoldMarkers()
         {
-            string inputText = "______";
+            string inputText = "******";
 
             var expectedResult = new TextFormatInfo
             {
-                Text = "______",
+                Text = "******",
                 Bolds = new Tuple<int, int>[] { },
                 Italics = new Tuple<int, int>[] { },
                 StrikeThroughs = new Tuple<int, int>[] { },
@@ -121,13 +121,13 @@ namespace WhatsappTextFormatter.Business.Tests.NUnit.GetTextFormatInfoFeature
         }
 
         [Test]
-        public void LotsOfItalicMarker()
+        public void LotsOfBoldMarker()
         {
-            string inputText = "_ __ ___ _ __ ____ _ __ _____ _ _ __";
+            string inputText = "* ** *** * ** **** * ** ***** * * **";
 
             var expectedResult = new TextFormatInfo
             {
-                Text = "_ __ ___ _ __ ____ _ __ _____ _ _ __",
+                Text = "* ** *** * ** **** * ** ***** * * **",
                 Bolds = new Tuple<int, int>[] { },
                 Italics = new Tuple<int, int>[] { },
                 StrikeThroughs = new Tuple<int, int>[] { },
