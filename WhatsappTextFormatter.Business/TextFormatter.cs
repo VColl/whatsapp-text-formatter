@@ -4,70 +4,32 @@ using System.Linq;
 
 namespace WhatsappTextFormatter.Business
 {
-    internal abstract class TextFormatter
+    internal abstract class TextFormatter : ITextFormatter
     {
-        private readonly char _marker;
+        public static ITextFormatter Dummy = new DummyTextFormatter();
 
-        public TextFormatter(char marker)
+        public int FirstMarkerIndex { get; set; } = -1;
+
+        public int GetCountMarkersBefore(TextFormatInfo info, int index) =>
+            GetRanges(info).Count(r => r.Item1 < index) + GetRanges(info).Count(r => r.Item2 < index);
+
+        public IEnumerable<int> GetMarkerIndexes(TextFormatInfo info) =>
+            GetRanges(info)
+            .SelectMany(r => new[] { r.Item1, r.Item2 });
+
+        public abstract char Marker { get; }
+        public abstract ICollection<Tuple<int, int>> GetRanges(TextFormatInfo info);
+        public abstract void SetRanges(TextFormatInfo info, ICollection<Tuple<int, int>> ranges);
+
+        private class DummyTextFormatter : ITextFormatter
         {
-            _marker = marker;
+            public char Marker => ' ';
+            public int FirstMarkerIndex { get; set; }
+
+            public int GetCountMarkersBefore(TextFormatInfo info, int index) => 0;
+            public IEnumerable<int> GetMarkerIndexes(TextFormatInfo info) => Enumerable.Empty<int>();
+            public ICollection<Tuple<int, int>> GetRanges(TextFormatInfo info) => new Tuple<int, int>[] { };
+            public void SetRanges(TextFormatInfo info, ICollection<Tuple<int, int>> ranges) { }
         }
-
-        public IEnumerable<Tuple<int, int>> GetIndexRanges(string text) =>
-            GetIndexRanges(text, 0);
-
-        private IEnumerable<Tuple<int, int>> GetIndexRanges(string text, int startIndex)
-        {
-            int indexOfFirstMarker = GetIndexOfFirstMarker(text, startIndex);
-            if (indexOfFirstMarker == -1)
-                yield break;
-
-            int indexOfSecondMarker = GetIndexOfSecondMarker(text, indexOfFirstMarker + 1);
-            if (indexOfSecondMarker == -1)
-                yield break;
-
-            yield return Tuple.Create(indexOfFirstMarker, indexOfSecondMarker);
-
-            foreach (var range in GetIndexRanges(text, indexOfSecondMarker + 1))
-                yield return range;
-        }
-
-        private int GetIndexOfFirstMarker(string text, int startIndex)
-        {
-            if (!text.Substring(startIndex).Contains(_marker))
-                return -1;
-
-            int indexOfFirstMarker = text.IndexOf(_marker, startIndex);
-
-            if (!text.Substring(indexOfFirstMarker + 1).Contains(_marker))
-                return -1;
-
-            return IsValidFirstMarker(text, indexOfFirstMarker)
-                ? indexOfFirstMarker
-                : GetIndexOfFirstMarker(text, indexOfFirstMarker + 1);
-        }
-
-        private int GetIndexOfSecondMarker(string text, int startIndex)
-        {
-            if (!text.Substring(startIndex).Contains(_marker))
-                return -1;
-
-            int indexOfSecondMarker = text.IndexOf(_marker, startIndex);
-
-            return IsValidSecondMarker(text, indexOfSecondMarker)
-                ? indexOfSecondMarker
-                : GetIndexOfSecondMarker(text, indexOfSecondMarker + 1);
-        }
-
-        private bool IsValidFirstMarker(string text, int indexOfFirstMarker) =>
-            !char.IsWhiteSpace(text[indexOfFirstMarker + 1])
-            && (indexOfFirstMarker == 0
-                || char.IsWhiteSpace(text[indexOfFirstMarker - 1])
-                || Markers.All.Except(new[] { _marker }).Contains(text[indexOfFirstMarker - 1]));
-
-        private bool IsValidSecondMarker(string text, int indexOfSecondMarker) =>
-            text.Length == indexOfSecondMarker + 1
-            || char.IsWhiteSpace(text[indexOfSecondMarker + 1])
-            || Markers.All.Contains(text[indexOfSecondMarker + 1]);
     }
 }

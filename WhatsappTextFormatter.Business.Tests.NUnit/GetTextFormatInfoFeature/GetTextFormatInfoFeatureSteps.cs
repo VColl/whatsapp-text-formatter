@@ -1,8 +1,8 @@
 using NUnit.Framework;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using WhatsappTextFormatter.Business.SimpleFormatters;
 
 namespace WhatsappTextFormatter.Business.Tests.NUnit.GetTextFormatInfoFeature
 {
@@ -13,7 +13,9 @@ namespace WhatsappTextFormatter.Business.Tests.NUnit.GetTextFormatInfoFeature
 
         public GetTextFormatInfoFeatureSteps()
         {
-            _textFormatter = new FullTextFormatter();
+            var factory = new TextFormatterFactory(new ITextFormatter[] { new BoldFormatter(), new ItalicFormatter(), new StrikeThroughFormatter() });
+
+            _textFormatter = new FullTextFormatter(factory);
         }
 
         public void Setup()

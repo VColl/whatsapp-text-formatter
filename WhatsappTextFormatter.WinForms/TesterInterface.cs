@@ -3,18 +3,21 @@ using System;
 using System.Drawing;
 using System.Windows.Forms;
 using WhatsappTextFormatter.Business;
+using WhatsappTextFormatter.Business.SimpleFormatters;
 
 namespace WhatsappTextFormatter.WinForms
 {
     public partial class TesterInterface : Form
     {
-        private readonly FullTextFormatter _formatter;
+        private readonly FullTextFormatter _textFormatter;
 
         public TesterInterface()
         {
             InitializeComponent();
 
-            _formatter = new FullTextFormatter();
+            var factory = new TextFormatterFactory(new ITextFormatter[] { new BoldFormatter(), new ItalicFormatter(), new StrikeThroughFormatter() });
+
+            _textFormatter = new FullTextFormatter(factory);
             btFormat.Click += BtFormat_Click;
 
             rtbUnformattedText.Focus();
@@ -22,14 +25,7 @@ namespace WhatsappTextFormatter.WinForms
 
         private void BtFormat_Click(object sender, EventArgs e)
         {
-            //var info = new TextFormatInfo
-            //{
-            //    Text = "___**T~~he~~ ***~~_**qu~ick*** bro***_wn *_fox ju*_m~ps o_ver the _*__*lazy__~~*_**** ~dog__~~____",
-            //    Bolds = new Tuple<int, int>[] { Tuple.Create(50, 56), Tuple.Create(57, 66), Tuple.Create(70, 76), Tuple.Create(80, 80) },
-            //    Italics = new Tuple<int, int>[] { Tuple.Create(5, 17), Tuple.Create(21, 33), Tuple.Create(36, 41), Tuple.Create(50, 56), Tuple.Create(70, 74), Tuple.Create(77, 79), Tuple.Create(81, 81), Tuple.Create(84, 89) },
-            //    StrikeThroughs = new Tuple<int, int>[] { Tuple.Create(80, 80) },
-            //};
-            var info = _formatter.GetTextFormatInfo(rtbUnformattedText.Text);
+            var info = _textFormatter.GetTextFormatInfo(rtbUnformattedText.Text);
 
             rtbText.Text = info.Text;
             rtbFormatInfo.Text = JsonConvert.SerializeObject(info, Formatting.Indented);
