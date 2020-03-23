@@ -121,14 +121,19 @@ namespace WhatsappTextFormatter.Business
         private bool IsValidFirstMarker(char marker, int markerIndex, string text) =>
             (text.Length > markerIndex + 1)
             && !char.IsWhiteSpace(text[markerIndex + 1])
-            && (text[markerIndex + 1] != marker || (text.Length > markerIndex + 2 && !Markers.All.Contains(text[markerIndex + 2])))
+            && (text[markerIndex + 1] != marker
+                || (text.Length > markerIndex + 2
+                    && !Markers.All.Contains(text[markerIndex + 2])
+                    && !char.IsWhiteSpace(text[markerIndex + 2])))
             && (markerIndex == 0
                 || char.IsWhiteSpace(text[markerIndex - 1])
                 || Markers.All.Except(new[] { marker }).Contains(text[markerIndex - 1]));
 
         private bool IsValidSecondMarker(char marker, int markerIndex, string text) =>
             !char.IsWhiteSpace(text[markerIndex - 1])
-            && text[markerIndex - 1] != marker
+            && (text[markerIndex - 1] != marker
+                || (markerIndex - 2 >= 0
+                    && char.IsWhiteSpace(text[markerIndex - 2])))
             && (text.Length == markerIndex + 1
                 || char.IsWhiteSpace(text[markerIndex + 1])
                 || Markers.All.Contains(text[markerIndex + 1]));
